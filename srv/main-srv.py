@@ -18,21 +18,23 @@ server_socket = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
 server_socket.bind(("0.0.0.0", PORT))
 
 # Écoute pour les connexions entrantes (maximum 5 connexions en attente)
-server_socket.listen(2)
 
-print(f"Le serveur écoute sur {SRV}:{PORT}")
+while True :
+    server_socket.listen(5)
 
-# Attente d'une connexion entrante
-client_socket, client_address = server_socket.accept()
-print(f"Connexion acceptée de {client_address}")
+    print(f"Le serveur écoute sur {SRV}:{PORT}")
 
-# Recevoir des données du client
-data = client_socket.recv(1024)
-print(f"Données reçues du client : {data.decode('utf-8')}")
+    # Attente d'une connexion entrante
+    client_socket, client_address = server_socket.accept()
+    print(f"Connexion acceptée de {client_address}")
 
-# Envoyer des données au client
-response = "Bonjour, client !"
-client_socket.send(response.encode('utf-8'))
+    # Recevoir des données du client
+    data = client_socket.recv(1024)
+    print(f"Données reçues du client : {data.decode('utf-8')}")
+
+    # Envoyer des données au client
+    response = "Bonjour, client !"
+    client_socket.send(response.encode('utf-8'))
 
 # Fermer les connexions
 client_socket.close()

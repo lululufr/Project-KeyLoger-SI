@@ -17,14 +17,15 @@ Il doit embarquer les fonctionnalités suivantes :
     <date/heure>-keyboard.txt ).
     Il doit envoyer un message au spyware via la socket lui demandant de s'arrêter lorsque le serveur s'éteint. Pour ce faire,
     vous devez récupérer les signaux envoyés au serveur (ex : ctrl+c sur le processus).
+
     Il doit embarquer les arguments suivants :
-    -h/--help : affiche l'aide et les différentes options.
-    -l/--listen <port> : se met en écoute sur le port TCP saisi par l'utilisateur et attend les données du spyware.
-    -s/--show : affiche la liste des fichiers réceptionnées par le programme.
-    -r/--readfile <nom_fichier> : affiche le contenu du fichier stocké sur le serveur du spyware. Le contenu doit
-    être parfaitement lisible.
-    -k/--kill : arrête toute les instances de serveurs en cours, avertit le spyware de s'arrêter et de supprimer la
-    capture.
+        -h/--help : affiche l'aide et les différentes options.
+        -l/--listen <port> : se met en écoute sur le port TCP saisi par l'utilisateur et attend les données du spyware.
+        -s/--show : affiche la liste des fichiers réceptionnées par le programme.
+        -r/--readfile <nom_fichier> : affiche le contenu du fichier stocké sur le serveur du spyware. Le contenu doit
+        être parfaitement lisible.
+        -k/--kill : arrête toute les instances de serveurs en cours, avertit le spyware de s'arrêter et de supprimer la
+        capture.
 
 # Fonctionnalités supplémentaires
     Permettre d'accepter plusieurs spywares en parallèle.
