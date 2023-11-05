@@ -35,7 +35,7 @@ def chrono():
             seconds += 1
             time.sleep(1)
             if seconds % 10 == 0 :
-                #si pas de reponse du client, on kill tout
+                print("ok") #si pas de reponse du client, on kill tout
             if seconds == 600 :
                 kill_all()
 

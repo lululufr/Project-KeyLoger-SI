@@ -35,6 +35,7 @@ def pav_num(nombre):
         "< 104 >": 8,
         "< 105 >": 9,
     }
+
 def kill_all() :
     print( "tout tuer ")
 
