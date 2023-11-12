@@ -75,8 +75,6 @@ def receiver(port):
             data = client_socket.recv(1024)
             f.write(data.decode('utf-8'))
             print("connexion :" + ficname)
-
-
     client_socket.close()
     server_socket.close()
 
@@ -107,8 +105,7 @@ if __name__ == '__main__':
             print("------------------")
         sys.exit()
 
-
-    else :
+    else:
 
         if argument.listen:
 
@@ -119,8 +116,6 @@ if __name__ == '__main__':
         receiver_t = threading.Thread(target=receiver, args=(port,))
 
         receiver_t.start()
-
-
 
     # commands_t = threading.Thread(target=commands)
 
