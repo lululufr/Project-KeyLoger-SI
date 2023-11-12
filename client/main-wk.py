@@ -37,7 +37,6 @@ def kill_all():
     pid = os.getpid()
     os.kill(pid, 9)
 
-
 def parse(srt):
     pattern = r'<\d+>'
     new_str = srt.replace("'", "")
