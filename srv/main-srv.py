@@ -108,7 +108,7 @@ if __name__ == '__main__':
     else:
 
         if argument.listen:
-
+            print(f'Argument -l: {args.log}')
             port = argument.listen
         else:
             port = PORT
