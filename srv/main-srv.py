@@ -6,6 +6,8 @@ import threading
 import time
 import glob
 
+import args
+
 from env import *
 import datetime
 
