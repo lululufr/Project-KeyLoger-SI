@@ -6,7 +6,6 @@ import threading
 import time
 import glob
 
-import args
 
 from env import *
 import datetime
@@ -110,7 +109,7 @@ if __name__ == '__main__':
     else:
 
         if argument.listen:
-            print(f'Argument -l: {args.log}')
+            print(f'Argument -l: {argument.listen}')
             port = argument.listen
         else:
             port = PORT
