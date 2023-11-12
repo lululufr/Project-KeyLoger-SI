@@ -1,6 +1,7 @@
 import argparse
 import os
 import socket
+import sys
 import threading
 import time
 import glob
@@ -92,6 +93,8 @@ if __name__ == '__main__':
                 d = f.read()
                 print(d)
                 print("------------------")
+        sys.exit()
+
     if argument.show and not argument.readfile:
         path = '/keylogs/data/'
         fics = glob.glob(os.path.join(path, '*'))
@@ -99,7 +102,7 @@ if __name__ == '__main__':
             print("------------------")
             print(fic)
             print("------------------")
-
+        sys.exit()
 
 
     else :
