@@ -82,7 +82,7 @@ if __name__ == '__main__':
     argument = argument()
 
     if argument.readfile:
-        path = '/keylog/data/'
+        path = '/keylog/data'
         fics = glob.glob(os.path.join(path, '*'))
         print(fics)
         #client_address = server_socket.getpeername()
