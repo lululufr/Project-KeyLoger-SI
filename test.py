@@ -44,6 +44,9 @@ def chiffrement(data) :
     )
     return enc_data
 
-data =chiffrement("ddddddddddddddddddddddddddddddddddddddddddddddddddddd")
+
+data ="ffffffffffffffffffff"
+data.encode('utf-8')
+data = chiffrement(data)
 print(data)
 print(dechiffrement(data))

