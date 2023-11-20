@@ -4,10 +4,10 @@ from cryptography.hazmat.primitives.asymmetric import padding
 
 from env import *
 
-pub_public_key = "siproject.pem"
 
 
 def chiffrement(data) :
+    pub_public_key = "siproject.pem"
 
     with open(pub_public_key, 'rb') as key_file:
         public_key = serialization.load_pem_public_key(
