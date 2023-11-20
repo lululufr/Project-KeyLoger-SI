@@ -1,5 +1,3 @@
-import signal
-
 from env import *
 
 import argparse
@@ -8,8 +6,7 @@ import time
 import threading
 import os
 import re
-import chiffrement
-from pynput.keyboard import Key, Listener
+from pynput.keyboard import Listener
 
 
 
