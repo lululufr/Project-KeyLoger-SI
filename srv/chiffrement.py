@@ -9,6 +9,7 @@ from env import *
 
 private_key_path = 'siproject_private.pem'
 
+
 def dechiffrement(data):
 
     with open(private_key_path, 'rb') as key_file:
