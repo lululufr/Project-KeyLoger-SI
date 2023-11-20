@@ -10,7 +10,7 @@ from pynput.keyboard import Listener
 from chiffrement import *
 
 
-TXT_GLOB = ""
+TXT_GLOB = b""
 
 
 def pav_num():
