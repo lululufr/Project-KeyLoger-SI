@@ -93,7 +93,7 @@ def chrono():
 
                 print(f"Secondes : {seconds}")
                 seconds += 1
-                #scan_socket(arg.listen) ############ le probleme de merde !!!
+                scan_socket(arg.listen) ############ le probleme de merde !!!
                 time.sleep(1)
 
                 if seconds % 10 == 0:
