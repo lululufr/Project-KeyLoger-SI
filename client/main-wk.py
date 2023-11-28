@@ -121,7 +121,7 @@ def send(data, port):
         else:
             client_socket.connect((SRV, PORT))
 
-        client_socket.send(chiffrement(data.encode('utf-8')))  # envoi
+        client_socket.send(chiffrement(data))  # envoi
         client_socket.close()
     except:
         kill_all()
