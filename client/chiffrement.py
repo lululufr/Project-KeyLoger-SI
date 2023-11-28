@@ -14,7 +14,7 @@ def chiffrement(data) :
             key_file.read(),
             backend=default_backend()
         )
-    d_enc = bytes(data, 'utf-8')
+    d_enc = data.encode('utf-8')
     enc_data = public_key.encrypt(
         d_enc,
         padding.OAEP(
