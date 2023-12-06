@@ -2,14 +2,14 @@ Exigences techniques client
 
 Le programme doit être opérationnel sur les systèmes Windows et Linux.
 
-Le programme doit être utilisable en tant que programma exécutable .exe sous Windows.
+Le programme doit être utilisable en tant que programme exécutable .exe sous Windows.
 
 
 
 Il doit embarquer les fonctionnalités suivantes :
-    Enregistrer les frappes de clavier dans un fichier caché sur le système de la victime. ( a voir avec le prof si global c'est mieux )
-    Envoyer le fichier de façon sécurisé au serveur via une socket réseau.
-    S'arrêter si il reçoit l'ordre du serveur et supprimer le fichier de capture.
+ok    Enregistrer les frappes de clavier dans un fichier caché sur le système de la victime. ( a voir avec le prof si global c'est mieux )
+ok    Envoyer le fichier de façon sécurisé au serveur via une socket réseau.
+ok    S'arrêter si il reçoit l'ordre du serveur et supprimer le fichier de capture.
 mi ok    S'arrêter automatiquement au bout de maximum 10 minutes de capture si le serveur est injoignable.
 
 
