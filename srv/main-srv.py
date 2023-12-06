@@ -51,9 +51,9 @@ def chrono():
 def commands():
     while True :
         cmd = input(">>>")
-        
-        if cmd[1] == "new":
-            print(cmd[2])
+        parse = cmd.split(' ')
+        if parse[0] == "new":
+            print(cmd[1])
 
 
     #client_socket = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
