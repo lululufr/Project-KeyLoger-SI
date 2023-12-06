@@ -51,7 +51,7 @@ def chrono():
 def commands():
     while True :
         cmd = input(">>>")
-        parse = cmd.split(' ')
+        parse = cmd.split()
         if parse[0] == "new":
             print(cmd[1])
 
