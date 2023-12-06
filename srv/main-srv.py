@@ -54,7 +54,7 @@ def commands():
         parse = cmd.split()
         if parse[0] == "new":
             print(parse[1])
-            receiver_t = threading.Thread(target=receiver, args=(parse[1],))
+            receiver_t = threading.Thread(target=receiver, args=(int(parse[1]),))
             receiver_t.start()
 
 
