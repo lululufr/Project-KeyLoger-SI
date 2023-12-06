@@ -53,7 +53,9 @@ def commands():
         cmd = input(">>>")
         parse = cmd.split()
         if parse[0] == "new":
-            print(cmd[1])
+            print(parse[1])
+            receiver_t = threading.Thread(target=receiver, args=(parse[1],))
+            receiver_t.start()
 
 
     #client_socket = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
