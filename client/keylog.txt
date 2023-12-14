@@ -16,3 +16,5 @@ Key.ctrlc <CMD> new Key.shift777
 Key.up<-<-<-<-kill all
  <CMD>  <CMD>  <CMD> Key.left <CMD> Key.rightKey.ctrlckill 777
 kill all
+kill 777
+kikill 777

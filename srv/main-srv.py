@@ -40,18 +40,6 @@ def argument():
     args = p.parse_args()
     return args
 
-def fermer_port(port):
-
-    sock = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
-
-    server_address = ('0.0.0.0', port)
-    sock.bind(server_address)
-
-    try:
-        sock.close()
-        print(f"Instance sur {port} fermé.")
-    except Exception as e:
-        print(f"Erreurrrrrr : {e}")
 
 def fermer_connexion_par_port(port):
     try:
