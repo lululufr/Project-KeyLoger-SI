@@ -53,24 +53,28 @@ def fermer_port(port):
     except Exception as e:
         print(f"Erreurrrrrr : {e}")
 
-class MyTCPHandler(socketserver.BaseRequestHandler):
-    def handle(self):
-        # Vous pouvez ajouter un traitement supplémentaire si nécessaire
-        pass
-def close_port(port):
+def fermer_connexion_par_port(port):
     try:
-        # Créez un serveur TCP pour lier le port
-        server = socketserver.TCPServer(('0.0.0.0', port), MyTCPHandler)
+        # Recherche du PID du processus associé au port
+        pid = None
+        for conn in psutil.net_connections(kind='inet'):
+            if conn.laddr.port == port:
+                pid = conn.pid
+                break
 
-        # Servez en arrière-plan pour lier le port
-        server.server_activate()
+        if pid is not None:
+            # Ajouter un court délai d'attente avant de terminer le processus
+            time.sleep(1)
 
-        # Fermez le serveur pour libérer le port
-        server.server_close()
+            # Terminer le processus associé
+            process = psutil.Process(pid)
+            process.terminate()
+            print(f"Connexion sur le port {port} fermée avec succès.")
+        else:
+            print(f"Aucune connexion trouvée sur le port {port}.")
 
-        print(f"Le port {port} a été fermé.")
     except Exception as e:
-        print(f"Erreur lors de la fermeture du port {port}: {e}")
+        print(f"Erreur lors de la fermeture de la connexion sur le port {port}: {e}")
 
 def kill_all():
     print("tout tuer  !!")
@@ -119,7 +123,7 @@ def commands():
             elif not parse[1] :
                 print("il manque un argument")
             else :
-                print(close_port(int(parse[1])))
+                print(fermer_connexion_par_port(int(parse[1])))
                 print("tuer process "+parse[1])
 
     #client_socket = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
