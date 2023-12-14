@@ -7,7 +7,7 @@ import time
 import glob
 import socketserver
 import psutil
-
+from scapy.all import IP, TCP, send
 import chiffrement
 from chiffrement import *
 
@@ -67,16 +67,16 @@ def fermer_connexion_par_port_2(port):
 
 def fermer_connexion_par_port(port):
     try:
-        # Créez une connexion locale au port
-        sock = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
-        sock.connect(('0.0.0.0', port))
+        # Créer un paquet TCP de réinitialisation (RST)
+        reset_packet = IP(dst="localhost") / TCP(dport=port, flags="R")
 
-        # Fermez la connexion
-        sock.close()
+        # Envoyer le paquet
+        send(reset_packet)
 
         print(f"Connexion sur le port {port} fermée avec succès.")
     except Exception as e:
         print(f"Erreur lors de la fermeture de la connexion sur le port {port}: {e}")
+
 
 def kill_all():
     print("tout tuer  !!")
