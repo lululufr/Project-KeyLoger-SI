@@ -102,7 +102,6 @@ def commands():
             else :
                 print(fermer_port(parse[1]))
                 print("tuer process "+parse[1])
-err
 
     #client_socket = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
     #client_socket.connect((SRV, PORT))
