@@ -39,8 +39,9 @@ def argument():
 
 
 def kill_all():
-    print("tout tuer ")
-
+    print("tout tuer  !!")
+    pid = os.getpid()
+    os.kill(pid, 9)
 
 def chrono():
 
