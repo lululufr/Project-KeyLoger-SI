@@ -23,3 +23,5 @@ kill 777
 kill 77
 Key.upKey.upKey.up=<- 777
 kill all
+kill 777
+kill alll<-

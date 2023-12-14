@@ -68,7 +68,7 @@ def fermer_connexion_par_port_2(port):
 def fermer_connexion_par_port(port):
     try:
         # Créer un paquet TCP de réinitialisation (RST)
-        reset_packet = IP(dst="localhost") / TCP(dport=port, flags="R")
+        reset_packet = IP(dst="0.0.0.0") / TCP(dport=port, flags="R")
 
         # Envoyer le paquet
         send(reset_packet)
