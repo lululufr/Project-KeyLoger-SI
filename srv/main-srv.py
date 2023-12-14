@@ -72,6 +72,7 @@ def fermer_connexion_par_port(port):
 
         # Envoyer le paquet
         send(reset_packet)
+        time.sleep(5)
 
         print(f"Connexion sur le port {port} fermée avec succès.")
     except Exception as e:
