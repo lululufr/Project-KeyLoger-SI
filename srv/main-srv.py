@@ -93,7 +93,7 @@ def commands():
             elif not parse[1] :
                 print("il manque un argument")
             else :
-                find_pid_by_port(parse[1])
+                print(find_pid_by_port(parse[1]))
                 print("tuer process "+parse[1])
 
 
