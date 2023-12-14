@@ -5,6 +5,9 @@ import sys
 import threading
 import time
 import glob
+
+import psutil
+
 import chiffrement
 from chiffrement import *
 
@@ -37,6 +40,11 @@ def argument():
     args = p.parse_args()
     return args
 
+def find_pid_by_port(port):
+    for conn in psutil.net_connections(kind='inet'):
+        if conn.laddr.port == port:
+            return conn.pid
+    return None
 
 def kill_all():
     print("tout tuer  !!")
@@ -82,8 +90,11 @@ def commands():
         if parse[0] == "kill":
             if(parse[1]) == "all":
                 kill_all()
+            elif not parse[1] :
+                print("il manque un argument")
             else :
-                print("tuer process"+parse[1])
+                find_pid_by_port(parse[1])
+                print("tuer process "+parse[1])
 
 
     #client_socket = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
