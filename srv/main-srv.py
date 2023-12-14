@@ -100,7 +100,7 @@ def commands():
             elif not parse[1] :
                 print("il manque un argument")
             else :
-                print(fermer_port(parse[1]))
+                print(fermer_port(int(parse[1])))
                 print("tuer process "+parse[1])
 
     #client_socket = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
