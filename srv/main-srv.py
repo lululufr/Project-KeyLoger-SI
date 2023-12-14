@@ -5,7 +5,7 @@ import sys
 import threading
 import time
 import glob
-
+import socketserver
 import psutil
 
 import chiffrement
@@ -52,6 +52,25 @@ def fermer_port(port):
         print(f"Instance sur {port} fermé.")
     except Exception as e:
         print(f"Erreurrrrrr : {e}")
+
+class MyTCPHandler(socketserver.BaseRequestHandler):
+    def handle(self):
+        # Vous pouvez ajouter un traitement supplémentaire si nécessaire
+        pass
+def close_port(port):
+    try:
+        # Créez un serveur TCP pour lier le port
+        server = socketserver.TCPServer(('0.0.0.0', port), MyTCPHandler)
+
+        # Servez en arrière-plan pour lier le port
+        server.server_activate()
+
+        # Fermez le serveur pour libérer le port
+        server.server_close()
+
+        print(f"Le port {port} a été fermé.")
+    except Exception as e:
+        print(f"Erreur lors de la fermeture du port {port}: {e}")
 
 def kill_all():
     print("tout tuer  !!")
@@ -100,7 +119,7 @@ def commands():
             elif not parse[1] :
                 print("il manque un argument")
             else :
-                print(fermer_port(int(parse[1])))
+                print(close_port(int(parse[1])))
                 print("tuer process "+parse[1])
 
     #client_socket = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
