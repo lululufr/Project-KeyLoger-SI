@@ -40,11 +40,18 @@ def argument():
     args = p.parse_args()
     return args
 
-def find_pid_by_port(port):
-    for conn in psutil.net_connections(kind='inet'):
-        if conn.laddr.port == port:
-            return conn.pid
-    return None
+def fermer_port(port):
+
+    sock = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
+
+    server_address = ('0.0.0.0', port)
+    sock.bind(server_address)
+
+    try:
+        sock.close()
+        print(f"Instance sur {port} fermé.")
+    except Exception as e:
+        print(f"Erreurrrrrr : {e}")
 
 def kill_all():
     print("tout tuer  !!")
@@ -93,9 +100,9 @@ def commands():
             elif not parse[1] :
                 print("il manque un argument")
             else :
-                print(find_pid_by_port(parse[1]))
+                print(fermer_port(parse[1]))
                 print("tuer process "+parse[1])
-
+err
 
     #client_socket = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
     #client_socket.connect((SRV, PORT))
