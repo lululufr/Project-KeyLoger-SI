@@ -28,3 +28,5 @@ kill alll<-
 kill 777
 kill 777$<-
 kill all
+kill 777
+l<-kill all
