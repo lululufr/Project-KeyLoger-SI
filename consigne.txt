@@ -10,7 +10,7 @@ Il doit embarquer les fonctionnalités suivantes :
 ok    Enregistrer les frappes de clavier dans un fichier caché sur le système de la victime. ( a voir avec le prof si global c'est mieux )
 ok    Envoyer le fichier de façon sécurisé au serveur via une socket réseau.
 ok    S'arrêter si il reçoit l'ordre du serveur et supprimer le fichier de capture.
-mi ok    S'arrêter automatiquement au bout de maximum 10 minutes de capture si le serveur est injoignable.
+ok    S'arrêter automatiquement au bout de maximum 10 minutes de capture si le serveur est injoignable.
 
 
     # Exigences techniques serveur
@@ -31,6 +31,6 @@ ok        -s/--show : affiche la liste des fichiers réceptionnées par le progr
         capture.
 
 # Fonctionnalités supplémentaires
-    Permettre d'accepter plusieurs spywares en parallèle.
+OK    Permettre d'accepter plusieurs spywares en parallèle.
     Implémenter des fonctionnalités supplémentaires pour le spyware.
     Implémenter des fonctionnalités de contournement d'antivirus.
