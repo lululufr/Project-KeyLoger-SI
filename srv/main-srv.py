@@ -41,7 +41,8 @@ def argument():
     return args
 
 
-def fermer_connexion_par_port(port):
+
+def fermer_connexion_par_port_2(port):
     try:
         # Recherche du PID du processus associé au port
         pid = None
@@ -61,6 +62,19 @@ def fermer_connexion_par_port(port):
         else:
             print(f"Aucune connexion trouvée sur le port {port}.")
 
+    except Exception as e:
+        print(f"Erreur lors de la fermeture de la connexion sur le port {port}: {e}")
+
+def fermer_connexion_par_port(port):
+    try:
+        # Créez une connexion locale au port
+        sock = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
+        sock.connect(('0.0.0.0', port))
+
+        # Fermez la connexion
+        sock.close()
+
+        print(f"Connexion sur le port {port} fermée avec succès.")
     except Exception as e:
         print(f"Erreur lors de la fermeture de la connexion sur le port {port}: {e}")
 

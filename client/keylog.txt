@@ -18,3 +18,4 @@ Key.up<-<-<-<-kill all
 kill all
 kill 777
 kikill 777
+kikill 777
