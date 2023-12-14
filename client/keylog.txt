@@ -30,3 +30,8 @@ kill 777$<-
 kill all
 kill 777
 l<-kill all
+kill 777
+kill
+
+kill all
+ <ctrl> \x03
