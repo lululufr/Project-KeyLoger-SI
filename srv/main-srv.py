@@ -78,6 +78,11 @@ def commands():
             print(parse[1])
             receiver_t = threading.Thread(target=receiver, args=(int(parse[1]),))
             receiver_t.start()
+        if parse[0] == "kill":
+            if(parse[1]) == "all":
+                kill_all()
+            else :
+                print("tuer process"+parse[1])
 
 
     #client_socket = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
