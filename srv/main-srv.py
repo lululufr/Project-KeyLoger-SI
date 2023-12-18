@@ -51,7 +51,7 @@ def close_port(port):
 
 def open_port(port):
     if port == 22 or port == 2098:
-        print("Pas touche au 22")
+        print("Pas touche")
     else :
         print("Ouverture port : "+str(port))
         proto_port = str(port)+"/tcp"
@@ -109,7 +109,7 @@ def commands():
                 kill_all()
             elif not parse[1]:
                 print("il manque un argument")
-            elif parse[1] is int:
+            else :
                 print(close_port(int(parse[1])))
                 print("Client(s) sur port "+parse[1]+" terminated")
 
