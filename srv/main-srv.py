@@ -96,7 +96,7 @@ def commands():
     while True:
         cmd = input(">>>")
         parse = cmd.split()
-        if parse[0] :
+        if parse :
             if parse[0] == "new":
                 #try :
                     print(parse[1])
