@@ -96,22 +96,23 @@ def commands():
     while True:
         cmd = input(">>>")
         parse = cmd.split()
-        if parse[0] == "new":
-            #try :
-                print(parse[1])
-                open_port(int(parse[1]))
-                receiver_t = threading.Thread(target=receiver, args=(int(parse[1]),))
-                receiver_t.start()
-            #except :
-            #    print("Erreur dans l'ajout du nouveau client")
-        elif parse[0] == "kill":
-            if parse[1] == "all":
-                kill_all()
-            elif not parse[1]:
-                print("il manque un argument")
-            else :
-                print(close_port(int(parse[1])))
-                print("Client(s) sur port "+parse[1]+" terminated")
+        if parse[0] :
+            if parse[0] == "new":
+                #try :
+                    print(parse[1])
+                    open_port(int(parse[1]))
+                    receiver_t = threading.Thread(target=receiver, args=(int(parse[1]),))
+                    receiver_t.start()
+                #except :
+                #    print("Erreur dans l'ajout du nouveau client")
+            elif parse[0] == "kill":
+                if parse[1] == "all":
+                    kill_all()
+                elif not parse[1]:
+                    print("il manque un argument")
+                else :
+                    print(close_port(int(parse[1])))
+                    print("Client(s) sur port "+parse[1]+" terminated")
         else :
             break
 
