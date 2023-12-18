@@ -45,16 +45,16 @@ def close_port(port):
     if port == 22 or port == 2098:
         print("Pas touche a ce port")
     else :
-        print("Fermeture port : "+port)
-        proto_port = port+"/tcp"
+        print("Fermeture port : "+str(port))
+        proto_port = str(port)+"/tcp"
         subprocess.run(["ufw","delete","allow",proto_port])
 
 def open_port(port):
     if port == 22 or port == 2098:
         print("Pas touche au 22")
     else :
-        print("Ouverture port : "+port)
-        proto_port = port+"/tcp"
+        print("Ouverture port : "+str(port))
+        proto_port = str(port)+"/tcp"
         subprocess.run(["ufw","allow",proto_port])
 
 
