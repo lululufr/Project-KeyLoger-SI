@@ -34,4 +34,4 @@ kill 777
 kill
 
 kill all
- <ctrl> \x03
+ <ctrl> \x03 <CMD>  <CMD> dede <CMD> Key.right <CMD> Key.left

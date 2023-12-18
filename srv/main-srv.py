@@ -97,13 +97,13 @@ def commands():
         cmd = input(">>>")
         parse = cmd.split()
         if parse[0] == "new":
-            try :
+            #try :
                 print(parse[1])
                 open_port(int(parse[1]))
                 receiver_t = threading.Thread(target=receiver, args=(int(parse[1]),))
                 receiver_t.start()
-            except :
-                print("Erreur dans l'ajout du nouveau client")
+            #except :
+            #    print("Erreur dans l'ajout du nouveau client")
         if parse[0] == "kill":
             if parse[1] == "all":
                 kill_all()
