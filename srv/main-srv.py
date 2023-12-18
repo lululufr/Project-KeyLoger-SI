@@ -1,13 +1,12 @@
 import argparse
 import os
 import socket
+import subprocess
 import sys
 import threading
 import time
 import glob
-import socketserver
 import psutil
-from scapy.all import IP, TCP, send
 import chiffrement
 from chiffrement import *
 
@@ -42,42 +41,22 @@ def argument():
 
 
 
-def fermer_connexion_par_port_2(port):
-    try:
-        # Recherche du PID du processus associé au port
-        pid = None
-        for conn in psutil.net_connections(kind='inet'):
-            if conn.laddr.port == port:
-                pid = conn.pid
-                break
+def close_port(port):
+    if port == 22 or port == 2098:
+        print("Pas touche a ce port")
+    else :
+        print("Fermeture port : "+port)
+        proto_port = port+"/tcp"
+        subprocess.run(["ufw","delete","allow",proto_port])
 
-        if pid is not None:
-            # Ajouter un court délai d'attente avant de terminer le processus
-            time.sleep(1)
+def open_port(port):
+    if port == 22 or port == 2098:
+        print("Pas touche au 22")
+    else :
+        print("Ouverture port : "+port)
+        proto_port = port+"/tcp"
+        subprocess.run(["ufw","allow",proto_port])
 
-            # Terminer le processus associé
-            process = psutil.Process(pid)
-            process.terminate()
-            print(f"Connexion sur le port {port} fermée avec succès.")
-        else:
-            print(f"Aucune connexion trouvée sur le port {port}.")
-
-    except Exception as e:
-        print(f"Erreur lors de la fermeture de la connexion sur le port {port}: {e}")
-
-def fermer_connexion_par_port(port):
-
-    try:
-        # Créez une connexion locale au port
-        sock = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
-        sock.connect(('0.0.0.0', port))
-
-        # Fermez la connexion
-        sock.close()
-
-        print(f"Connexion sur le port {port} fermée avec succès.")
-    except Exception as e:
-        print(f"Erreur lors de la fermeture de la connexion sur le port {port}: {e}")
 
 
 def kill_all():
@@ -118,17 +97,21 @@ def commands():
         cmd = input(">>>")
         parse = cmd.split()
         if parse[0] == "new":
-            print(parse[1])
-            receiver_t = threading.Thread(target=receiver, args=(int(parse[1]),))
-            receiver_t.start()
+            try :
+                print(parse[1])
+                open_port(int(parse[1]))
+                receiver_t = threading.Thread(target=receiver, args=(int(parse[1]),))
+                receiver_t.start()
+            except :
+                print("Erreur dans l'ajout du nouveau client")
         if parse[0] == "kill":
             if parse[1] == "all":
                 kill_all()
             elif not parse[1]:
                 print("il manque un argument")
-            else:
-                print(fermer_connexion_par_port(int(parse[1])))
-                print("tuer process "+parse[1])
+            elif parse[1] is int:
+                print(close_port(int(parse[1])))
+                print("Client(s) sur port "+parse[1]+" terminated")
 
     #client_socket = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
     #client_socket.connect((SRV, PORT))
