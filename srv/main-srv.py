@@ -10,8 +10,6 @@ import psutil
 import chiffrement
 from chiffrement import *
 
-from pynput.keyboard import Listener
-
 from env import *
 import datetime
 
@@ -86,14 +84,6 @@ def chrono():
                 kill_all()
 
 
-def kpr(key):
-    if key == "Key.enter":
-        return True
-
-
-def touchenter():
-    with Listener(on_press=kpr) as listener:
-        listener.join()
 
 
 def commands():
@@ -126,8 +116,6 @@ def commands():
         else:
             break
 
-        if touchenter():
-            break
 
     # client_socket = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
     # client_socket.connect((SRV, PORT))
