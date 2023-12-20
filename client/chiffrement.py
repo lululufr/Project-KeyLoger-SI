@@ -5,7 +5,6 @@ from cryptography.hazmat.primitives.asymmetric import padding
 from env import *
 
 
-
 def chiffrement(data) :
     pub_public_key = "siproject.pem"
 

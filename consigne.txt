@@ -41,6 +41,7 @@ TODO:
 - kill specifique ok
 - fichier sans heure ok
 - meilleure affichage sur serveur ---- TODO
+_ afficher les logs
 -
 
 
