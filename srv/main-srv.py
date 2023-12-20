@@ -96,7 +96,7 @@ def commands():
     while True:
         cmd = input(">>>")
         parse = cmd.split()
-        if parse :
+        if parse:
             if parse[0] == "new":
                 #try :
                     print(parse[1])
@@ -110,9 +110,11 @@ def commands():
                     kill_all()
                 elif not parse[1]:
                     print("il manque un argument")
-                else :
+                else:
                     print(close_port(int(parse[1])))
                     print("Client(s) sur port "+parse[1]+" terminated")
+            elif parse[0] == "\n" :
+                break
         else :
             break
 
