@@ -99,7 +99,7 @@ def commands():
         cmd = input(">>>")
         parse = cmd.split()
 
-        if parse[0] == "\n" :
+        if parse == "\n" :
             break
 
         if parse:
