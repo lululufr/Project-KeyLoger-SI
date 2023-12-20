@@ -26,7 +26,7 @@ ok       -l/--listen <port> : se met en écoute sur le port TCP saisi par l'util
 ok        -s/--show : affiche la liste des fichiers réceptionnées par le programme.
 ok      r/--readfile <nom_fichier> : affiche le contenu du fichier stocké sur le serveur du spyware. Le contenu doit
         être parfaitement lisible.
-        -k/--kill : arrête toute les instances de serveurs en cours, avertit le spyware de s'arrêter et de supprimer la
+ok       -k/--kill : arrête toute les instances de serveurs en cours, avertit le spyware de s'arrêter et de supprimer la
         capture.
 
 # Fonctionnalités supplémentaires

