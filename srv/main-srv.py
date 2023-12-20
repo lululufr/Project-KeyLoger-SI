@@ -97,7 +97,7 @@ def commands():
         cmd = input(">>>")
         parse = cmd.split()
         if parse:
-            if parse[0] == "new":
+            if parse[0].lstrip() == "new":
                 #try :
                     print(parse[1])
                     open_port(int(parse[1]))
@@ -105,7 +105,7 @@ def commands():
                     receiver_t.start()
                 #except :
                 #    print("Erreur dans l'ajout du nouveau client")
-            elif parse[0] == "kill":
+            elif parse[0].lstrip() == "kill":
                 if parse[1] == "all":
                     kill_all()
                 elif not parse[1]:
@@ -113,8 +113,7 @@ def commands():
                 else:
                     print(close_port(int(parse[1])))
                     print("Client(s) sur port "+parse[1]+" terminated")
-            elif parse[0] == "\n" :
-                break
+
         else :
             break
 
