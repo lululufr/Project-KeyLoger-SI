@@ -91,8 +91,9 @@ def commands():
     La fonction demande un
     La fonction ne retourne rien
     """
-
     while True:
+
+        parse = []
         cmd = input(">>>")
         parse = cmd.split()
 

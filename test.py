@@ -8,6 +8,55 @@ from cryptography.hazmat.primitives.asymmetric import rsa, padding
 import threading
 
 
+parse = []
+def process_command(cmd):
+    """
+    Fonction pour traiter les commandes
+    """
+    parse = cmd.split()
+
+    if parse:
+        if parse[0] == "new":
+            try:
+                print(parse[1])
+                open_port(int(parse[1]))
+                receiver_t = threading.Thread(target=receiver, args=(int(parse[1]),))
+                receiver_t.start()
+            except Exception as e:
+                print(f"Erreur dans l'ajout du nouveau client : {e}")
+        elif parse[0] == "kill":
+            if parse[1] == "all":
+                kill_all()
+            elif not parse[1]:
+                print("il manque un argument")
+            else:
+                print(close_port(int(parse[1])))
+                print("Client(s) sur port " + parse[1] + " terminated")
+
+    # Réinitialiser la liste parse
+    parse = []
+
+    return bool(parse)
+
+
+def commands():
+    """
+    La fonction demande un
+    La fonction ne retourne rien
+    """
+
+    while True:
+        cmd = input(">>> ")
+
+        if not process_command(cmd):
+            break
+
+        if touchenter():
+            break
+
+
+# Appel de la fonction principale
+commands()
 def dechiffrement(data):
     private_key_path = 'srv/siproject_private.pem'
     with open(private_key_path, 'rb') as key_file:
