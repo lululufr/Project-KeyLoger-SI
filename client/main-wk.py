@@ -12,6 +12,7 @@ from pynput.keyboard import Listener
 from chiffrement import *
 
 
+
 TXT_GLOB = ""
 
 
