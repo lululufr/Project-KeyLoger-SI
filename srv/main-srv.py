@@ -93,7 +93,7 @@ def commands():
     """
     while True:
 
-        parse = []
+
         cmd = input(">>>")
         parse = cmd.split()
 
@@ -114,8 +114,7 @@ def commands():
                 else:
                     print(close_port(int(parse[1])))
                     print("Client(s) sur port " + parse[1] + " terminated")
-        else:
-            break
+        parse = []
 
 
     # client_socket = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
