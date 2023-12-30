@@ -114,6 +114,8 @@ def commands():
                 else:
                     print(close_port(int(parse[1])))
                     print("Client(s) sur port " + parse[1] + " terminated")
+            elif parse[0] == "show" :
+                print("afficher les logs")
         parse = []
 
 

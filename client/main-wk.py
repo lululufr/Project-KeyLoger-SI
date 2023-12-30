@@ -13,6 +13,7 @@ from chiffrement import *
 
 # déclaration variable globale
 
+
 TXT_GLOB = ""
 
 

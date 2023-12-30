@@ -7,6 +7,7 @@ Le programme doit être utilisable en tant que programme exécutable .exe sous W
 
 
 Il doit embarquer les fonctionnalités suivantes :
+
 ok    Enregistrer les frappes de clavier dans un fichier caché sur le système de la victime. ( a voir avec le prof si global c'est mieux )
 ok    Envoyer le fichier de façon sécurisé au serveur via une socket réseau.
 ok    S'arrêter si il reçoit l'ordre du serveur et supprimer le fichier de capture.
@@ -31,15 +32,16 @@ ok       -k/--kill : arrête toute les instances de serveurs en cours, avertit l
 
 # Fonctionnalités supplémentaires
 OK    Permettre d'accepter plusieurs spywares en parallèle.
-    Implémenter des fonctionnalités supplémentaires pour le spyware.
+-------Implémenter des fonctionnalités supplémentaires pour le spyware.
 -------Implémenter des fonctionnalités de contournement d'antivirus.
 
 
 TODO:
-- Kill all
-- kill specifique
-- fichier sans heure
-- meilleure affichage sur serveur
+- Kill all ok
+- kill specifique ok
+- fichier sans heure ok
+- meilleure affichage sur serveur ---- TODO
+_ afficher les logs
 -
 
 
