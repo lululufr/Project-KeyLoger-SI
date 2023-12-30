@@ -6,7 +6,6 @@ from env import *
 
 
 def chiffrement(data):
-
     """
     Cette fonction permet de chiffrer avec l'algorithme d'asymétrie RSA (OAEP avec SHA-256)
     les données avec la clé publique.
