@@ -10,6 +10,13 @@ from env import *
 
 def dechiffrement(data):
 
+    """
+    Cette fonction permet de déchiffrer avec l'algorithme d'asymétrie RSA (OAEP avec SHA-256)
+    les données avec la clé privée.
+    :param data: Prend les paramètres les données chiffrées qui sont reçus.
+    :return:Les données déchiffrées.
+    """
+
     private_key_path = 'siproject_private.pem'
     with open(private_key_path, 'rb') as key_file:
 

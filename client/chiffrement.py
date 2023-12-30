@@ -13,6 +13,7 @@ def chiffrement(data):
     :param data: Prend les paramètres les données des données qui seront envoyées par la fonction send.
     :return:Les données chiffrées.
     """
+
     pub_public_key = "siproject.pem"
 
     with open(pub_public_key, 'rb') as key_file:

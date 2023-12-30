@@ -1,3 +1,5 @@
+# Bibliothèque importée
+
 import argparse
 import os
 import socket
@@ -13,6 +15,7 @@ from chiffrement import *
 from env import *
 import datetime
 
+# Déclaration variable globale
 TXT_GLOB = ""
 
 
@@ -40,8 +43,14 @@ def argument():
 
 
 def close_port(port):
+
+    """
+    Cette fonction permet de vérifier si ce n'est pas le port 22 et 2098 puis ferme directement le port dans le serveur.
+    :param port: Prend le port à fermer en commentaire.
+    :return:
+    """
     if port == 22 or port == 2098:
-        print("Pas touche a ce port")
+        print("Fermeture du port non autorisés")
     else:
         print("Fermeture port : " + str(port))
         proto_port = str(port) + "/tcp"
@@ -49,8 +58,14 @@ def close_port(port):
 
 
 def open_port(port):
+
+    """
+    Cette fonction permet de vérifier si ce n'est pas le port 22 et 2098 puis ouvre directement le port dans le serveur.
+    :param port: Prend le port à ouvrir en commentaire.
+    :return:
+    """
     if port == 22 or port == 2098:
-        print("Pas touche")
+        print("Ouverture du port non autorisés")
     else:
         print("Ouverture port : " + str(port))
         proto_port = str(port) + "/tcp"
@@ -58,6 +73,11 @@ def open_port(port):
 
 
 def kill_all():
+
+    """
+       Permet d'arrêter instantanément le script sans opération de nettoyage.
+       :return: Rien
+    """
     print("tout tuer  !!")
     pid = os.getpid()
     os.kill(pid, 9)
@@ -84,15 +104,18 @@ def chrono():
                 kill_all()
 
 
-
-
 def commands():
+
     """
-    La fonction demande un
+    La fonction demande à un utilisateur de rentrer une commande dans une boucle infini.
+    Si l'utilisateur rentre "new" avec un numéro de port une nouvelle écoute démarre simultanément avec les autres,
+    sur le port en question.
+    Si l'utilisateur rentre une commande "kill" avec un numéro de port la connection se coupe en fermant le port
+    en paramètre. Si la commande est suivie de "all" toutes les connection sont coupées.
+    Si l'utilisateur rentre une commande "show" cela affiche les logs.
     La fonction ne retourne rien
     """
     while True:
-
 
         cmd = input(">>>")
         parse = cmd.split()
@@ -114,10 +137,9 @@ def commands():
                 else:
                     print(close_port(int(parse[1])))
                     print("Client(s) sur port " + parse[1] + " terminated")
-            elif parse[0] == "show" :
+            elif parse[0] == "show":
                 print("afficher les logs")
         parse = []
-
 
     # client_socket = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
     # client_socket.connect((SRV, PORT))
@@ -126,6 +148,13 @@ def commands():
 
 
 def receiver(port):
+
+    """
+    Cette fonction crée un serveur qui écoute sur le port spécifié pour recevoir des données d'un client.
+    :param port: Port sur lequel écouter
+    :return: Rien
+    """
+
     server_socket = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
 
     server_socket.bind(("0.0.0.0", port))
