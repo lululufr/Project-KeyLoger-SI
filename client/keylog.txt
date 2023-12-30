@@ -34,5 +34,12 @@ kill 777
 kill
 
 kill all
+<<<<<<< Updated upstream
  <ctrl> \x03 <CMD>  <CMD> dede <CMD> Key.right <CMD> Key.left <CMD> Key.rightkill Key.shift777
  <CMD> Key.left
+=======
+ <ctrl> \x03trs<-<-est je tap <-<-<-je test je p<-tape exeunfn[^]dnonnplllllkill 777
+kill 777
+kill all
+>>>>>>> Stashed changes
+moijhhghiihhhbghjhh
