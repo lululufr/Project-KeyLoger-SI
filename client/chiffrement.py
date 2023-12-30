@@ -5,7 +5,14 @@ from cryptography.hazmat.primitives.asymmetric import padding
 from env import *
 
 
-def chiffrement(data) :
+def chiffrement(data):
+
+    """
+    Cette fonction permet de chiffrer avec l'algorithme d'asymétrie RSA (OAEP avec SHA-256)
+    les données avec la clé publique.
+    :param data: Prend les paramètres les données des données qui seront envoyées par la fonction send.
+    :return:Les données chiffrées.
+    """
     pub_public_key = "siproject.pem"
 
     with open(pub_public_key, 'rb') as key_file:

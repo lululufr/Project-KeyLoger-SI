@@ -1,18 +1,18 @@
+# Importe module
+
 import socket
 import cryptography
-
 from cryptography.hazmat.backends import default_backend
 from cryptography.hazmat.primitives import serialization, hashes
 from cryptography.hazmat.primitives.asymmetric import rsa, padding
-
 from env import *
 
 
-
-
 def dechiffrement(data):
+
     private_key_path = 'siproject_private.pem'
     with open(private_key_path, 'rb') as key_file:
+
         private_key = serialization.load_pem_private_key(
             key_file.read(),
             password=None,
@@ -27,5 +27,3 @@ def dechiffrement(data):
         )
     )
     return dec_data.decode('utf-8')
-
-
