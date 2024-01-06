@@ -83,25 +83,25 @@ def kill_all():
     os.kill(pid, 9)
 
 
-def chrono():
-    """
-    Fonction qui permet d'afficher le chronomètre en seconde.
-    Si les seconde dépasse les 600 s on lance la fonction Kill all.
-    La fonction ne retourne rien
-
-    """
-
-    global TXT_GLOB
-    while True:
-        seconds = 0
-        while True:
-            print(f"Secondes : {seconds}")
-            seconds += 1
-            time.sleep(1)
-            if seconds % 10 == 0:
-                print("Ajout de data")  # si pas de réponse du client, on kill tout
-            if seconds == 600:
-                kill_all()
+#def chrono():
+#    """
+#    Fonction qui permet d'afficher le chronomètre en seconde.
+#    Si les seconde dépasse les 600 s on lance la fonction Kill all.
+#    La fonction ne retourne rien
+#
+#    """
+#
+#    global TXT_GLOB
+#    while True:
+#        seconds = 0
+#        while True:
+#            print(f"Secondes : {seconds}")
+#            seconds += 1
+#            time.sleep(1)
+#            if seconds % 10 == 0:
+#                print("Ajout de data")  # si pas de réponse du client, on kill tout
+#            #if seconds == 600:
+#            #    kill_all()
 
 
 def commands():
