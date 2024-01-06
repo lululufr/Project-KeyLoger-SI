@@ -60,7 +60,6 @@ def pav_num():
 
 
 def kill_all():
-
     """
     Permet d'arrêter instantanément le script sans opération de nettoyage.
     :return: Rien
