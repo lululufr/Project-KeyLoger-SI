@@ -11,15 +11,18 @@ def chiffrement(data):
     les données avec la clé publique.
     :param data: Prend les paramètres les données des données qui seront envoyées par la fonction send.
     :return:Les données chiffrées.
+
     """
 
-    pub_public_key = "siproject.pem"
+    pub_public_key = KEY
 
-    with open(pub_public_key, 'rb') as key_file:
-        public_key = serialization.load_pem_public_key(
-            key_file.read(),
-            backend=default_backend()
-        )
+    # with open(pub_public_key, 'rb') as key_file:
+    #    datakey = key_file.read()
+
+    public_key = serialization.load_pem_public_key(
+        bytes(pub_public_key, "UTF-8"),
+        backend=default_backend()
+    )
     d_enc = data.encode('utf-8')
     enc_data = public_key.encrypt(
         d_enc,

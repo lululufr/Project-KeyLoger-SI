@@ -183,7 +183,7 @@ def commands(cmd, port):
     client_socket.send(cmd.encode('utf-8'))  # envoi
 
     client_socket.close()
-
+ 
 
 def chrono():
 
